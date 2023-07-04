@@ -21,6 +21,7 @@ object AuthorForm: TAuthorForm
     Height = 89
     Align = alTop
     TabOrder = 0
+    ExplicitWidth = 521
     object lblAuthorName: TLabel
       Left = 9
       Top = 13
@@ -54,7 +55,7 @@ object AuthorForm: TAuthorForm
       Left = 9
       Top = 39
       Width = 177
-      Height = 31
+      Height = 28
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -71,9 +72,8 @@ object AuthorForm: TAuthorForm
     Height = 410
     Align = alClient
     TabOrder = 1
-    ExplicitTop = 145
-    ExplicitWidth = 622
-    ExplicitHeight = 247
+    ExplicitWidth = 521
+    ExplicitHeight = 401
     object dbgAuthors: TDBGrid
       Left = 1
       Top = 1
@@ -136,8 +136,8 @@ object AuthorForm: TAuthorForm
     Height = 41
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 392
-    ExplicitWidth = 622
+    ExplicitTop = 490
+    ExplicitWidth = 521
     object dbnAuthor: TDBNavigator
       Left = 152
       Top = 1
@@ -147,6 +147,7 @@ object AuthorForm: TAuthorForm
       Align = alRight
       TabOrder = 0
       OnClick = dbnAuthorClick
+      ExplicitLeft = 146
     end
   end
 end

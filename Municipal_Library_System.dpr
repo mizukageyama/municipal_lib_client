@@ -19,13 +19,7 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TLoginForm, LoginForm);
-  Application.CreateForm(TAuthorForm, AuthorForm);
   Application.CreateForm(TMainForm, MainForm);
-  Application.CreateForm(TNewLendingForm, NewLendingForm);
-  Application.CreateForm(TCancelLendingForm, CancelLendingForm);
-  Application.CreateForm(TBookForm, BookForm);
-  Application.CreateForm(TCustomerForm, CustomerForm);
-  Application.CreateForm(TUserForm, UserForm);
   Application.CreateForm(TLibDataModule, LibDataModule);
   Application.Run;
 end.

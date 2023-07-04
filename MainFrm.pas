@@ -58,21 +58,25 @@ uses
 
 procedure TMainForm.actAuthorTableExecute(Sender: TObject);
 begin
+  Application.CreateForm(TAuthorForm, AuthorForm);
   AuthorForm.Show;
 end;
 
 procedure TMainForm.actBookTableExecute(Sender: TObject);
 begin
+  Application.CreateForm(TBookForm, BookForm);
   BookForm.Show;
 end;
 
 procedure TMainForm.actCancelLendingExecute(Sender: TObject);
 begin
+  Application.CreateForm(TCancelLendingForm, CancelLendingForm);
   CancelLendingForm.Show;
 end;
 
 procedure TMainForm.actCustomerTableExecute(Sender: TObject);
 begin
+  Application.CreateForm(TCustomerForm, CustomerForm);
   CustomerForm.Show;
 end;
 
@@ -90,11 +94,13 @@ end;
 
 procedure TMainForm.actNewLendingExecute(Sender: TObject);
 begin
+  Application.CreateForm(TNewLendingForm, NewLendingForm);
   NewLendingForm.Show;
 end;
 
 procedure TMainForm.actUserTableExecute(Sender: TObject);
 begin
+  Application.CreateForm(TUserForm, UserForm);
   UserForm.Show;
 end;
 
