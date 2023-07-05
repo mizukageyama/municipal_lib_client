@@ -9,27 +9,39 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Mask, Vcl.DBCtrls, Vcl.ExtCtrls,
   MVCFramework.RESTClient.Intf, MVCFramework.RESTClient, TokenManagerU,
-  Vcl.Buttons, System.ImageList, Vcl.ImgList, PaginationControllerU;
+  Vcl.Buttons, System.ImageList, Vcl.ImgList, PaginationControllerU, Vcl.ExtDlgs;
 
 type
   TAuthorForm = class(TForm)
-    pnlActions: TPanel;
-    pnlGrid: TPanel;
-    pnlNavigation: TPanel;
-    dbnAuthor: TDBNavigator;
-    dbgAuthors: TDBGrid;
-    btnSearch: TButton;
-    edtName: TEdit;
-    lblAuthorName: TLabel;
+    dsAuthor: TDataSource;
+    pcAuthor: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
     fdmemAuthor: TFDMemTable;
     fdmemAuthorid: TIntegerField;
     fdmemAuthorFullname: TStringField;
     fdmemAuthorDOB: TDateField;
-    dsAuthor: TDataSource;
+    pnlGrid: TPanel;
+    dbgAuthors: TDBGrid;
+    pnlActions: TPanel;
+    lblAuthorName: TLabel;
+    btnSearch: TButton;
+    edtName: TEdit;
+    dbnAuthor: TDBNavigator;
+    pnlNavigation: TPanel;
+    lblPageInfo: TLabel;
     bbtnNextPage: TBitBtn;
     bbtnPrevPage: TBitBtn;
-    lblPageInfo: TLabel;
-    pnlInfo: TPanel;
+    pnlAuthorInfo: TPanel;
+    pnlBooks: TPanel;
+    dtpBirthDate: TDateTimePicker;
+    btnSave: TButton;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    DBGrid1: TDBGrid;
+    dbeID: TDBEdit;
+    dbeFullname: TDBEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure GetAuthors(SearchKey: string = ''; PageParam: Integer = 1);
@@ -40,6 +52,8 @@ type
     procedure bbtnNextPageClick(Sender: TObject);
     procedure bbtnPrevPageClick(Sender: TObject);
     procedure ValidateInput;
+    procedure TabSheet2Show(Sender: TObject);
+    procedure TabSheet1Show(Sender: TObject);
   private
     RESTClient: IMVCRESTClient;
     Loading: Boolean;
@@ -74,6 +88,17 @@ begin
   Result := SearchKey;
 end;
 
+
+procedure TAuthorForm.TabSheet1Show(Sender: TObject);
+begin
+  AuthorForm.Height := 609;
+end;
+
+procedure TAuthorForm.TabSheet2Show(Sender: TObject);
+begin
+  if TabSheet2.Caption = 'New Author' then
+    AuthorForm.Height := 298
+end;
 
 procedure TAuthorForm.ValidateInput;
 begin
@@ -152,7 +177,7 @@ procedure TAuthorForm.FormCreate(Sender: TObject);
 begin
   RESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
   Pagination := TPaginationData.Create;
-  GetAuthors;
+  //GetAuthors;
 end;
 
 procedure TAuthorForm.GetAuthors(SearchKey: string = ''; PageParam: Integer = 1);
@@ -187,10 +212,14 @@ begin
         lblPageInfo.Caption := Format('Page %d out of %d', [Pagination.fCurrentPage, Pagination.fTotalPages]);
       end, nil, True).Get('/api/authors');
   except
-    //Something went wrong
-    bbtnNextPage.Enabled := False;
-    bbtnPrevPage.Enabled := False;
-    lblPageInfo.Caption := 'No result';
+    on e: Exception do
+    begin
+      //Something went wrong
+      bbtnNextPage.Enabled := False;
+      bbtnPrevPage.Enabled := False;
+      lblPageInfo.Caption := 'No result';
+      ShowMessage(e.toString);
+    end;
   end;
 end;
 

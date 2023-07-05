@@ -105,9 +105,7 @@ object LoginForm: TLoginForm
       Color = clWhite
       ParentBackground = False
       TabOrder = 3
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitHeight = 357
+      ExplicitHeight = 359
       object imgLogo: TImage
         Left = 32
         Top = 98
