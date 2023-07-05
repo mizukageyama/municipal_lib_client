@@ -133,12 +133,17 @@
             <Form>UserForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="LibraryDM.pas">
-            <Form>LibDataModule</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
         <DCCReference Include="TokenManagerU.pas"/>
+        <DCCReference Include="PaginationControllerU.pas"/>
+        <DCCReference Include="LoadingFrm.pas">
+            <Form>LoadingForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="AuthorFrame.pas">
+            <Form>Frame1</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

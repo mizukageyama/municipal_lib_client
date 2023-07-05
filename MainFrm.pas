@@ -38,7 +38,6 @@ type
     procedure actExitExecute(Sender: TObject);
     procedure actNewLendingExecute(Sender: TObject);
     procedure actLogoutExecute(Sender: TObject);
-    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -102,14 +101,6 @@ procedure TMainForm.actUserTableExecute(Sender: TObject);
 begin
   Application.CreateForm(TUserForm, UserForm);
   UserForm.Show;
-end;
-
-procedure TMainForm.FormShow(Sender: TObject);
-var
-  Token: string;
-begin
-  Token:= GlobalTokenManager.GetToken;
-  ShowMessage('This is the token: ' + Token);
 end;
 
 end.

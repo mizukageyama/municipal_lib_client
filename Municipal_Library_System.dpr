@@ -10,8 +10,10 @@ uses
   BookFrm in 'BookFrm.pas' {BookForm},
   CustomerFrm in 'CustomerFrm.pas' {CustomerForm},
   UserFrm in 'UserFrm.pas' {UserForm},
-  LibraryDM in 'LibraryDM.pas' {LibDataModule: TDataModule},
-  TokenManagerU in 'TokenManagerU.pas';
+  TokenManagerU in 'TokenManagerU.pas',
+  PaginationControllerU in 'PaginationControllerU.pas',
+  LoadingFrm in 'LoadingFrm.pas' {LoadingForm},
+  AuthorFrame in 'AuthorFrame.pas' {Frame1: TFrame};
 
 {$R *.res}
 
@@ -19,7 +21,8 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TLoginForm, LoginForm);
+  Application.CreateForm(TNewLendingForm, NewLendingForm);
+  Application.CreateForm(TLoadingForm, LoadingForm);
   Application.CreateForm(TMainForm, MainForm);
-  Application.CreateForm(TLibDataModule, LibDataModule);
   Application.Run;
 end.

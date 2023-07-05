@@ -1,19 +1,56 @@
 ﻿[dbgAuthors]
-Coordinates=76,78,72,33
+Coordinates=76,78,80,36
 
 [dbnAuthor]
-Coordinates=222,10,66,51
+Coordinates=222,10,74,58
 
 [pnlNavigation]
-Coordinates=10,10,82,51
+Coordinates=10,10,93,58
 
 [pnlGrid]
-Coordinates=10,78,50,51
+Coordinates=10,78,56,58
 
 [pnlActions]
-Coordinates=306,10,67,51
+Coordinates=306,10,74,58
 
 []
-Coordinates=75,1,60,51
+Coordinates=129,240,91,36
+Visible=True
+
+[fdmemAuthorDOB]
+Coordinates=418,1,119,36
+
+[lblPageInfo]
+Coordinates=0,0,79,58
+
+[edtName]
+Coordinates=306,164,66,58
+
+[lblAuthorName]
+Coordinates=213,1,100,58
+
+[fdmemAuthorid]
+Coordinates=418,56,102,36
+
+[bbtnNextPage]
+Coordinates=98,1,96,58
+
+[fdmemAuthorFullname]
+Coordinates=418,111,144,36
+
+[bbtnPrevPage]
+Coordinates=287,240,96,58
+
+[btnSearch]
+Coordinates=306,87,73,58
+
+[fdmemAuthor]
+Coordinates=177,78,91,124
+
+[dsAuthor]
+Coordinates=79,77,66,36
+
+[pnlInfo]
+Coordinates=228,240,55,58
 Visible=True
 

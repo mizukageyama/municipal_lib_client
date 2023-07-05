@@ -1,43 +1,31 @@
-object AuthorForm: TAuthorForm
+object Frame1: TFrame1
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu, biMinimize]
-  Caption = 'Authors'
-  ClientHeight = 540
-  ClientWidth = 1053
-  Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -12
-  Font.Name = 'Segoe UI'
-  Font.Style = []
-  Position = poScreenCenter
-  OnClose = FormClose
-  OnCreate = FormCreate
-  TextHeight = 15
+  Width = 640
+  Height = 480
+  TabOrder = 0
   object pnlGrid: TPanel
     Left = 0
     Top = 0
-    Width = 568
-    Height = 540
+    Width = 640
+    Height = 480
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitTop = 77
-    ExplicitWidth = 521
-    ExplicitHeight = 407
+    ExplicitTop = -60
+    ExplicitWidth = 568
+    ExplicitHeight = 540
     object dbgAuthors: TDBGrid
       AlignWithMargins = True
       Left = 6
       Top = 77
-      Width = 556
-      Height = 416
+      Width = 628
+      Height = 356
       Margins.Left = 6
       Margins.Top = 0
       Margins.Right = 6
       Margins.Bottom = 0
       Align = alClient
-      DataSource = dsAuthor
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -89,12 +77,12 @@ object AuthorForm: TAuthorForm
     object pnlActions: TPanel
       Left = 0
       Top = 0
-      Width = 568
+      Width = 640
       Height = 77
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 767
+      ExplicitWidth = 568
       object lblAuthorName: TLabel
         Left = 9
         Top = 13
@@ -122,7 +110,6 @@ object AuthorForm: TAuthorForm
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        OnClick = btnSearchClick
       end
       object edtName: TEdit
         Left = 9
@@ -142,17 +129,15 @@ object AuthorForm: TAuthorForm
         Top = 39
         Width = 240
         Height = 28
-        DataSource = dsAuthor
         VisibleButtons = [nbInsert, nbDelete, nbEdit, nbPost, nbCancel, nbRefresh]
         TabOrder = 2
-        OnClick = dbnAuthorClick
       end
     end
     object pnlNavigation: TPanel
       AlignWithMargins = True
       Left = 0
-      Top = 498
-      Width = 568
+      Top = 438
+      Width = 640
       Height = 37
       Margins.Left = 0
       Margins.Top = 5
@@ -161,11 +146,12 @@ object AuthorForm: TAuthorForm
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitWidth = 767
+      ExplicitTop = 498
+      ExplicitWidth = 568
       object lblPageInfo: TLabel
         Left = 120
         Top = 0
-        Width = 322
+        Width = 394
         Height = 37
         Align = alClient
         Alignment = taCenter
@@ -176,7 +162,7 @@ object AuthorForm: TAuthorForm
       end
       object bbtnNextPage: TBitBtn
         AlignWithMargins = True
-        Left = 445
+        Left = 517
         Top = 3
         Width = 118
         Height = 34
@@ -241,8 +227,7 @@ object AuthorForm: TAuthorForm
           47004C704700}
         Layout = blGlyphRight
         TabOrder = 0
-        OnClick = bbtnNextPageClick
-        ExplicitLeft = 644
+        ExplicitLeft = 445
       end
       object bbtnPrevPage: TBitBtn
         AlignWithMargins = True
@@ -310,22 +295,10 @@ object AuthorForm: TAuthorForm
           4AFB96BC4AEA96BC4ABD96BC4A6F96BC4A1D4C7047004C7047004C7047004C70
           47004C704700}
         TabOrder = 1
-        OnClick = bbtnPrevPageClick
       end
     end
   end
-  object pnlInfo: TPanel
-    Left = 568
-    Top = 0
-    Width = 485
-    Height = 540
-    Align = alRight
-    TabOrder = 1
-    Visible = False
-  end
   object fdmemAuthor: TFDMemTable
-    BeforePost = fdmemAuthorBeforePost
-    BeforeDelete = fdmemAuthorBeforeDelete
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]

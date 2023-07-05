@@ -20,6 +20,7 @@ object LoginForm: TLoginForm
     Width = 576
     Height = 368
     Align = alClient
+    BevelOuter = bvNone
     ParentBackground = False
     TabOrder = 0
     ExplicitWidth = 570
@@ -95,14 +96,17 @@ object LoginForm: TLoginForm
       OnClick = btnLoginClick
     end
     object pnlLeft: TPanel
-      Left = 1
-      Top = 1
+      Left = 0
+      Top = 0
       Width = 273
-      Height = 366
+      Height = 368
       Align = alLeft
+      BevelOuter = bvNone
       Color = clWhite
       ParentBackground = False
       TabOrder = 3
+      ExplicitLeft = 1
+      ExplicitTop = 1
       ExplicitHeight = 357
       object imgLogo: TImage
         Left = 32

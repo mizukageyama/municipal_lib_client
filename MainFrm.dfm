@@ -12,7 +12,6 @@ object MainForm: TMainForm
   Font.Style = []
   Menu = mmLibrarySystem
   Position = poScreenCenter
-  OnShow = FormShow
   TextHeight = 15
   object mmLibrarySystem: TMainMenu
     BiDiMode = bdLeftToRight
