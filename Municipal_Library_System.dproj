@@ -117,8 +117,8 @@
             <Form>CancelLendingForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="AuthorFrm.pas">
-            <Form>AuthorForm</Form>
+        <DCCReference Include="UserFrm.pas">
+            <Form>UserForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="BookFrm.pas">
@@ -127,10 +127,6 @@
         </DCCReference>
         <DCCReference Include="CustomerFrm.pas">
             <Form>CustomerForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UserFrm.pas">
-            <Form>UserForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="TokenManagerU.pas"/>
