@@ -12,16 +12,15 @@ uses
   UserFrm in 'UserFrm.pas' {UserForm},
   TokenManagerU in 'TokenManagerU.pas',
   PaginationControllerU in 'PaginationControllerU.pas',
-  LoadingFrm in 'LoadingFrm.pas' {LoadingForm};
+  LoadingFrm in 'LoadingFrm.pas' {LoadingForm},
+  APIRequestServiceU in 'APIRequestServiceU.pas';
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TAuthorForm, AuthorForm);
   Application.CreateForm(TLoginForm, LoginForm);
-  Application.CreateForm(TNewLendingForm, NewLendingForm);
   Application.CreateForm(TLoadingForm, LoadingForm);
   Application.CreateForm(TMainForm, MainForm);
   Application.Run;

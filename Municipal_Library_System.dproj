@@ -139,6 +139,7 @@
             <Form>LoadingForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="APIRequestServiceU.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

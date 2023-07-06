@@ -41,7 +41,6 @@ implementation
 
 {$R *.dfm}
 
-
 procedure TLoginForm.btnLoginClick(Sender: TObject);
 var
   Username: string;

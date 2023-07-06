@@ -4,23 +4,20 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, FireDAC.Stan.Intf,
-  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Mask, Vcl.DBCtrls, Vcl.ExtCtrls,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Vcl.Mask, Vcl.DBCtrls, Vcl.ExtCtrls,
   MVCFramework.RESTClient.Intf, MVCFramework.RESTClient, TokenManagerU,
-  Vcl.Buttons, System.ImageList, Vcl.ImgList, PaginationControllerU, Vcl.ExtDlgs;
+  Vcl.Buttons, System.ImageList, Vcl.ImgList, PaginationControllerU,
+  Vcl.ExtDlgs, APIRequestServiceU;
 
 type
   TAuthorForm = class(TForm)
-    dsAuthor: TDataSource;
     pcAuthor: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
-    fdmemAuthor: TFDMemTable;
-    fdmemAuthorid: TIntegerField;
-    fdmemAuthorFullname: TStringField;
-    fdmemAuthorDOB: TDateField;
     pnlGrid: TPanel;
     dbgAuthors: TDBGrid;
     pnlActions: TPanel;
@@ -36,12 +33,26 @@ type
     pnlBooks: TPanel;
     dtpBirthDate: TDateTimePicker;
     btnSave: TButton;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    DBGrid1: TDBGrid;
-    dbeID: TDBEdit;
-    dbeFullname: TDBEdit;
+    lblID: TLabel;
+    lblFullname: TLabel;
+    lblBirthDate: TLabel;
+    dbgAuthorBooks: TDBGrid;
+    TabSheet3: TTabSheet;
+    pnlRawData: TPanel;
+    memRawResponse: TMemo;
+    lblAuthorInfo: TLabel;
+    dsAuthor: TDataSource;
+    fdmemAuthor: TFDMemTable;
+    fdmemAuthorid: TIntegerField;
+    fdmemAuthorFullname: TStringField;
+    fdmemAuthorDOB: TDateField;
+    fdmemAuthorBook: TFDMemTable;
+    dsAuthorBook: TDataSource;
+    fdmemAuthorBookid: TIntegerField;
+    fdmemAuthorBooktitle: TStringField;
+    fdmemAuthorBookyear: TIntegerField;
+    edtID: TEdit;
+    edtFullname: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure GetAuthors(SearchKey: string = ''; PageParam: Integer = 1);
@@ -54,10 +65,17 @@ type
     procedure ValidateInput;
     procedure TabSheet2Show(Sender: TObject);
     procedure TabSheet1Show(Sender: TObject);
+    procedure dbgAuthorsDblClick(Sender: TObject);
+    procedure TabSheet3Show(Sender: TObject);
+    procedure GetBooksByAuthorId(AuthorId: integer);
+    procedure btnSaveClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     RESTClient: IMVCRESTClient;
-    Loading: Boolean;
+    CurrentResponse: string;
+    IsNewData: Boolean;
     Pagination: TPaginationData;
+    Loading: Boolean;
     function GetSearchKey: string;
     { Private declarations }
   public
@@ -70,8 +88,7 @@ var
 implementation
 
 uses
-  MVCFramework.DataSet.Utils, MVCFramework.Serializer.Commons,
-  LibraryDM, System.JSON;
+  MVCFramework.DataSet.Utils, MVCFramework.Serializer.Commons, System.JSON;
 
 {$R *.dfm}
 
@@ -88,16 +105,39 @@ begin
   Result := SearchKey;
 end;
 
-
 procedure TAuthorForm.TabSheet1Show(Sender: TObject);
 begin
   AuthorForm.Height := 609;
+  IsNewData := True;
+  TabSheet2.Caption := 'New Author';
 end;
 
 procedure TAuthorForm.TabSheet2Show(Sender: TObject);
 begin
-  if TabSheet2.Caption = 'New Author' then
-    AuthorForm.Height := 298
+  if (TabSheet2.Caption = 'New Author') and IsNewData then
+  begin
+    AuthorForm.Height := 298;
+    edtID.Text := '*Auto Generated*';
+    edtFullname.Clear;
+    dtpBirthDate.Date := Now;
+  end
+  else
+  begin
+    var SelectedAuthorID := fdmemAuthorId.Value;
+    edtID.Text := SelectedAuthorID.toString;
+    edtFullname.Text := fdmemAuthorFullname.AsString;
+    dtpBirthDate.Date := fdmemAuthorDOB.Value;
+    GetBooksByAuthorId(SelectedAuthorID);
+  end;
+end;
+
+procedure TAuthorForm.TabSheet3Show(Sender: TObject);
+begin
+  AuthorForm.Height := 609;
+  memRawResponse.Lines.Add(CurrentResponse);
+  memRawResponse.SelStart := 0;
+  memRawResponse.SelLength := 0;
+  memRawResponse.Perform(EM_SCROLLCARET, 0, 0);
 end;
 
 procedure TAuthorForm.ValidateInput;
@@ -114,6 +154,45 @@ begin
   GetAuthors(GetSearchKey, Pagination.fCurrentPage - 1);
 end;
 
+procedure TAuthorForm.btnSaveClick(Sender: TObject);
+var
+  JSONBody: TJSONObject;
+  APIEndpoint: string;
+  AuthorFullName: string;
+  AuthorDOB: TDate;
+begin
+  AuthorFullName := edtFullname.Text;
+  AuthorDOB := dtpBirthDate.Date;
+
+  if AuthorFullName.IsEmpty	or (AuthorDOB = Now) then
+  begin
+    ShowMessage('Please fill all the fields');
+    Exit;
+  end;
+
+  JSONBody := TJSONObject.Create;
+  JSONBody.AddPair('full_name', AuthorFullName);
+  JSONBody.AddPair('date_of_birth', AuthorDOB);
+
+  if IsNewData then
+  begin
+    APIEndpoint := '/api/authors';
+    if APIRequest.POST(RESTClient, APIEndpoint, JSONBody) then
+    begin
+      GetAuthors;
+      pcAuthor.ActivePageIndex := 0;
+    end
+  end
+  else
+  begin
+    APIEndpoint := Format('/api/authors/%s', [edtID.Text]);
+    if APIRequest.PUT(RESTClient, APIEndpoint, JSONBody) then
+      GetAuthors;
+  end;
+end;
+
+
+
 procedure TAuthorForm.btnSearchClick(Sender: TObject);
 begin
   if GetSearchKey.IsEmpty then
@@ -123,6 +202,14 @@ begin
   end;
 
   GetAuthors(GetSearchKey);
+end;
+
+procedure TAuthorForm.dbgAuthorsDblClick(Sender: TObject);
+begin
+  IsNewData := False;
+  TabSheet2.Caption := 'Information';
+  pnlBooks.Visible := not IsNewData;
+  pcAuthor.TabIndex := 1;
 end;
 
 procedure TAuthorForm.dbnAuthorClick(Sender: TObject; Button: TNavigateBtn);
@@ -152,10 +239,10 @@ begin
     Exit;
 
   ValidateInput;
-
   case fdmemAuthor.State of
     dsEdit:
-      Resp := RESTClient.DataSetUpdate('/api/authors', fdmemAuthorid.AsString, fdmemAuthor);
+      Resp := RESTClient.DataSetUpdate('/api/authors', fdmemAuthorid.AsString,
+        fdmemAuthor);
     dsInsert:
       begin
         Resp := RESTClient.DataSetInsert('/api/authors', fdmemAuthor);
@@ -177,10 +264,16 @@ procedure TAuthorForm.FormCreate(Sender: TObject);
 begin
   RESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
   Pagination := TPaginationData.Create;
-  //GetAuthors;
+  IsNewData := True;
 end;
 
-procedure TAuthorForm.GetAuthors(SearchKey: string = ''; PageParam: Integer = 1);
+procedure TAuthorForm.FormShow(Sender: TObject);
+begin
+  GetAuthors;
+end;
+
+procedure TAuthorForm.GetAuthors(SearchKey: string = '';
+  PageParam: Integer = 1);
 begin
   RESTClient.AddQueryStringParam('page', PageParam);
 
@@ -197,19 +290,21 @@ begin
         fdmemAuthor.Close;
         fdmemAuthor.Open;
         Loading := True;
+        CurrentResponse := Resp.Content;
 
-        GetPaginationData(Resp.Content, Pagination);
-
+        GetPaginationData(CurrentResponse, Pagination);
         fdmemAuthor.LoadJSONArrayFromJSONObjectProperty('data',
-          Resp.Content, TMVCNameCase.ncSnakeCase);
+          CurrentResponse, TMVCNameCase.ncSnakeCase);
         fdmemAuthor.First;
-        Loading := False;
-        RESTClient.ClearQueryParams;
 
         //set pagination button
         bbtnNextPage.Enabled := Pagination.fHasNextPage;
         bbtnPrevPage.Enabled := Pagination.fHasPrevPage;
-        lblPageInfo.Caption := Format('Page %d out of %d', [Pagination.fCurrentPage, Pagination.fTotalPages]);
+        lblPageInfo.Caption := Format('Page %d out of %d',
+          [Pagination.fCurrentPage, Pagination.fTotalPages]);
+
+        Loading := True;
+        RESTClient.ClearQueryParams;
       end, nil, True).Get('/api/authors');
   except
     on e: Exception do
@@ -218,6 +313,30 @@ begin
       bbtnNextPage.Enabled := False;
       bbtnPrevPage.Enabled := False;
       lblPageInfo.Caption := 'No result';
+      ShowMessage(e.toString);
+      RESTClient.ClearQueryParams;
+    end;
+  end;
+end;
+
+procedure TAuthorForm.GetBooksByAuthorId(AuthorId: integer);
+begin
+  try
+    RESTClient.SetBearerAuthorization(GlobalTokenManager.GetToken).Async(
+      procedure (Resp: IMVCRESTResponse)
+      begin
+        fdmemAuthorBook.Close;
+        fdmemAuthorBook.Open;
+
+        fdmemAuthorBook.LoadJSONArrayFromJSONObjectProperty('data',
+          Resp.Content, TMVCNameCase.ncSnakeCase);
+        fdmemAuthorBook.First;
+
+        RESTClient.ClearQueryParams;
+      end, nil, True).Get(Format('/api/authors/%d/books', [AuthorId]));
+  except
+    on e: Exception do
+    begin
       ShowMessage(e.toString);
     end;
   end;

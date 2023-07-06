@@ -12,7 +12,6 @@ type
     fHasPrevPage: boolean;
     fCurrentPage: Integer;
     fTotalPages: Integer;
-
   end;
 
 procedure GetPaginationData(Resp: string; out PaginationData: TPaginationData);

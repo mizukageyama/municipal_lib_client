@@ -15,6 +15,7 @@ object AuthorForm: TAuthorForm
   Scaled = False
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object pcAuthor: TPageControl
     AlignWithMargins = True
@@ -25,13 +26,11 @@ object AuthorForm: TAuthorForm
     Margins.Left = 0
     Margins.Right = 0
     Margins.Bottom = 0
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 1
-    ExplicitTop = 4
-    ExplicitWidth = 572
-    ExplicitHeight = 566
+    ExplicitWidth = 568
+    ExplicitHeight = 559
     object TabSheet1: TTabSheet
       Caption = 'Author Table'
       OnShow = TabSheet1Show
@@ -43,8 +42,8 @@ object AuthorForm: TAuthorForm
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 564
-        ExplicitHeight = 536
+        ExplicitWidth = 560
+        ExplicitHeight = 529
         object dbgAuthors: TDBGrid
           AlignWithMargins = True
           Left = 6
@@ -69,6 +68,7 @@ object AuthorForm: TAuthorForm
           TitleFont.Height = -12
           TitleFont.Name = 'Segoe UI'
           TitleFont.Style = []
+          OnDblClick = dbgAuthorsDblClick
           Columns = <
             item
               Expanded = False
@@ -113,7 +113,7 @@ object AuthorForm: TAuthorForm
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitWidth = 564
+          ExplicitWidth = 560
           object lblAuthorName: TLabel
             Left = 9
             Top = 13
@@ -180,8 +180,8 @@ object AuthorForm: TAuthorForm
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 2
-          ExplicitTop = 494
-          ExplicitWidth = 564
+          ExplicitTop = 487
+          ExplicitWidth = 560
           object lblPageInfo: TLabel
             Left = 120
             Top = 0
@@ -262,7 +262,7 @@ object AuthorForm: TAuthorForm
             Layout = blGlyphRight
             TabOrder = 0
             OnClick = bbtnNextPageClick
-            ExplicitLeft = 441
+            ExplicitLeft = 437
           end
           object bbtnPrevPage: TBitBtn
             AlignWithMargins = True
@@ -348,60 +348,80 @@ object AuthorForm: TAuthorForm
         BevelOuter = bvNone
         ParentBackground = False
         TabOrder = 0
-        object Label1: TLabel
-          Left = 57
-          Top = 72
+        object lblID: TLabel
+          Left = 81
+          Top = 64
           Width = 14
           Height = 15
           Alignment = taRightJustify
           Caption = 'ID:'
         end
-        object Label2: TLabel
-          Left = 17
-          Top = 113
+        object lblFullname: TLabel
+          Left = 41
+          Top = 105
           Width = 57
           Height = 15
           Alignment = taRightJustify
           Caption = 'Full Name:'
         end
-        object Label3: TLabel
-          Left = 19
-          Top = 152
+        object lblBirthDate: TLabel
+          Left = 43
+          Top = 144
           Width = 55
           Height = 15
           Alignment = taRightJustify
           Caption = 'Birth Date:'
         end
+        object lblAuthorInfo: TLabel
+          Left = 24
+          Top = 20
+          Width = 99
+          Height = 15
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
+          Caption = 'Author Infomation'
+        end
         object dtpBirthDate: TDateTimePicker
-          Left = 80
-          Top = 148
-          Width = 116
+          Left = 104
+          Top = 140
+          Width = 145
           Height = 23
           Date = 45112.000000000000000000
           Time = 0.874582719909085400
           TabOrder = 0
         end
         object btnSave: TButton
-          Left = 429
+          Left = 437
           Top = 179
           Width = 107
           Height = 25
           Caption = 'Save'
           TabOrder = 1
+          OnClick = btnSaveClick
         end
-        object dbeID: TDBEdit
-          Left = 80
-          Top = 69
-          Width = 68
+        object edtID: TEdit
+          Left = 104
+          Top = 61
+          Width = 113
           Height = 23
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           ReadOnly = True
           TabOrder = 2
         end
-        object dbeFullname: TDBEdit
-          Left = 80
-          Top = 110
-          Width = 151
+        object edtFullname: TEdit
+          Left = 105
+          Top = 102
+          Width = 208
           Height = 23
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 3
         end
       end
@@ -415,28 +435,83 @@ object AuthorForm: TAuthorForm
         ParentBackground = False
         TabOrder = 1
         Visible = False
-        ExplicitTop = 231
-        ExplicitHeight = 307
-        object DBGrid1: TDBGrid
+        object dbgAuthorBooks: TDBGrid
           Left = 0
           Top = 0
           Width = 566
           Height = 313
           Align = alClient
+          DataSource = dsAuthorBook
+          ReadOnly = True
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
           TitleFont.Height = -12
           TitleFont.Name = 'Segoe UI'
           TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id'
+              Width = 58
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'title'
+              Width = 280
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pub_year'
+              Width = 190
+              Visible = True
+            end>
+        end
+      end
+    end
+    object TabSheet3: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      Caption = 'Raw Data'
+      ImageIndex = 2
+      OnShow = TabSheet3Show
+      object pnlRawData: TPanel
+        Left = 0
+        Top = 0
+        Width = 566
+        Height = 538
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        Align = alClient
+        TabOrder = 0
+        object memRawResponse: TMemo
+          Left = 1
+          Top = 1
+          Width = 564
+          Height = 536
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
+          Align = alClient
+          Lines.Strings = (
+            '')
+          ScrollBars = ssVertical
+          TabOrder = 0
         end
       end
     end
   end
   object dsAuthor: TDataSource
     DataSet = fdmemAuthor
-    Left = 736
-    Top = 185
+    Left = 40
+    Top = 449
   end
   object fdmemAuthor: TFDMemTable
     BeforePost = fdmemAuthorBeforePost
@@ -448,8 +523,8 @@ object AuthorForm: TAuthorForm
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 632
-    Top = 185
+    Left = 40
+    Top = 385
     object fdmemAuthorid: TIntegerField
       Alignment = taLeftJustify
       DisplayLabel = 'ID'
@@ -467,5 +542,33 @@ object AuthorForm: TAuthorForm
       DisplayFormat = 'mmm dd, yyyy'
       EditMask = '!99/99/0000;1;_'
     end
+  end
+  object fdmemAuthorBook: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 132
+    Top = 382
+    object fdmemAuthorBookid: TIntegerField
+      DisplayLabel = 'Book ID'
+      FieldName = 'id'
+    end
+    object fdmemAuthorBooktitle: TStringField
+      DisplayLabel = 'Title'
+      FieldName = 'title'
+    end
+    object fdmemAuthorBookyear: TIntegerField
+      DisplayLabel = 'Published Year'
+      FieldName = 'pub_year'
+    end
+  end
+  object dsAuthorBook: TDataSource
+    DataSet = fdmemAuthorBook
+    Left = 132
+    Top = 454
   end
 end
