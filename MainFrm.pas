@@ -18,18 +18,18 @@ type
     Customertable1: TMenuItem;
     Usertable1: TMenuItem;
     Newlending1: TMenuItem;
-    CancelLending1: TMenuItem;
-    N1: TMenuItem;
-    Exit1: TMenuItem;
     actNewLending: TAction;
-    actCancelLending: TAction;
     actAuthorTable: TAction;
     actBookTable: TAction;
     actCustomerTable: TAction;
     actUserTable: TAction;
     actExit: TAction;
     actLogout: TAction;
-    Logout1: TMenuItem;
+    actChangePassword: TAction;
+    Account1: TMenuItem;
+    Change1: TMenuItem;
+    Logout2: TMenuItem;
+    N1: TMenuItem;
     procedure actCancelLendingExecute(Sender: TObject);
     procedure actAuthorTableExecute(Sender: TObject);
     procedure actBookTableExecute(Sender: TObject);
@@ -53,7 +53,7 @@ implementation
 
 uses
   AuthorFrm, BookFrm, CancelLendingFrm, CustomerFrm, NewLendingFrm, UserFrm,
-  LoginFrm;
+  LoginFrm, LendingFrm;
 
 procedure TMainForm.actAuthorTableExecute(Sender: TObject);
 begin
@@ -93,8 +93,8 @@ end;
 
 procedure TMainForm.actNewLendingExecute(Sender: TObject);
 begin
-  Application.CreateForm(TNewLendingForm, NewLendingForm);
-  NewLendingForm.Show;
+  Application.CreateForm(TLendingForm, LendingForm);
+  LendingForm.Show;
 end;
 
 procedure TMainForm.actUserTableExecute(Sender: TObject);

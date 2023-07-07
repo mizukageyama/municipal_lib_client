@@ -29,17 +29,25 @@ class function APIRequest.POST(const RESTClient: IMVCRESTClient;
 var
   IsSuccess: Boolean;
   Resp: IMVCRESTResponse;
+  JSONValue: TJSONValue;
 begin
   IsSuccess := False;
   try
-    RESTClient.AddBody(JSONBody.toString, 'application/json');
+    if JSONBody <> nil then
+      RESTClient.AddBody(JSONBody.toString, 'application/json');
+
     Resp := RESTClient.SetBearerAuthorization(GlobalTokenManager.GetToken)
       .POST(Endpoint);
-
     if Resp.StatusCode in [201, 200] then
     begin
       IsSuccess := True;
       ShowMessage('Added Successfully.');
+    end
+    else if Resp.StatusCode = 400 then
+    begin
+      JSONValue := TJSONObject.ParseJSONValue(Resp.Content);
+      var ErrorMessage := JSONValue.GetValue<string>('message');
+      ShowMessage(ErrorMessage);
     end
     else if Resp.StatusCode = 403 then
       ShowMessage('You are now allowed for this action.');
@@ -55,10 +63,13 @@ class function APIRequest.PUT(const RESTClient: IMVCRESTClient;
 var
   IsSuccess: Boolean;
   Resp: IMVCRESTResponse;
+  JSONValue: TJSONValue;
 begin
   IsSuccess := False;
   try
-    RESTClient.AddBody(JSONBody.toString, 'application/json');
+     if JSONBody <> nil then
+      RESTClient.AddBody(JSONBody.toString, 'application/json');
+
     Resp := RESTClient.SetBearerAuthorization(GlobalTokenManager.GetToken)
       .PUT(Endpoint);
 
@@ -66,6 +77,17 @@ begin
     begin
       ShowMessage('Updated Successfully.');
       IsSuccess := True;
+    end
+    else if Resp.StatusCode = 204 then
+    begin
+      ShowMessage(Resp.StatusText);
+      IsSuccess := True;
+    end
+    else if Resp.StatusCode = 400 then
+    begin
+      JSONValue := TJSONObject.ParseJSONValue(Resp.Content);
+      var ErrorMessage := JSONValue.GetValue<string>('message');
+      ShowMessage(ErrorMessage);
     end
     else if Resp.StatusCode = 403 then
       ShowMessage('You are now allowed for this action.');
@@ -81,6 +103,7 @@ class function APIRequest.DELETE(const RESTClient: IMVCRESTClient;
 var
   IsSuccess: Boolean;
   Resp: IMVCRESTResponse;
+  JSONValue: TJSONValue;
 begin
   IsSuccess := False;
   try
@@ -90,6 +113,17 @@ begin
     begin
       ShowMessage('Deleted Successfully.');
       IsSuccess := True;
+    end
+    else if Resp.StatusCode = 204 then
+    begin
+      ShowMessage(Resp.StatusText);
+      IsSuccess := True;
+    end
+    else if Resp.StatusCode = 400 then
+    begin
+      JSONValue := TJSONObject.ParseJSONValue(Resp.Content);
+      var ErrorMessage := JSONValue.GetValue<string>('message');
+      ShowMessage(ErrorMessage);
     end
     else if Resp.StatusCode = 403 then
       ShowMessage('You are now allowed for this action.');

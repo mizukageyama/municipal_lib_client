@@ -1,10 +1,10 @@
-object CustomerForm: TCustomerForm
+object LendingForm: TLendingForm
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
-  Caption = 'Customers'
+  Caption = 'Lendings'
   ClientHeight = 571
-  ClientWidth = 830
+  ClientWidth = 968
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,11 +17,19 @@ object CustomerForm: TCustomerForm
   OnCreate = FormCreate
   OnShow = FormShow
   TextHeight = 15
-  object pcCustomer: TPageControl
+  object Label1: TLabel
+    Left = 69
+    Top = 127
+    Width = 32
+    Height = 15
+    Alignment = taRightJustify
+    Caption = 'Email:'
+  end
+  object pcLending: TPageControl
     AlignWithMargins = True
     Left = 0
     Top = 3
-    Width = 830
+    Width = 968
     Height = 568
     Margins.Left = 0
     Margins.Right = 0
@@ -29,33 +37,31 @@ object CustomerForm: TCustomerForm
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 824
+    ExplicitWidth = 962
     ExplicitHeight = 559
     object TabSheet1: TTabSheet
-      Caption = 'Customer Table'
+      Caption = 'Lending Table'
       OnShow = TabSheet1Show
       object pnlGrid: TPanel
         Left = 0
         Top = 0
-        Width = 822
+        Width = 960
         Height = 538
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 816
-        ExplicitHeight = 529
-        object dbgCustomers: TDBGrid
+        object dbgUsers: TDBGrid
           AlignWithMargins = True
           Left = 6
           Top = 77
-          Width = 810
+          Width = 948
           Height = 414
           Margins.Left = 6
           Margins.Top = 0
           Margins.Right = 6
           Margins.Bottom = 0
           Align = alClient
-          DataSource = dsCustomer
+          DataSource = dsLending
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -15
@@ -69,51 +75,54 @@ object CustomerForm: TCustomerForm
           TitleFont.Height = -12
           TitleFont.Name = 'Segoe UI'
           TitleFont.Style = []
+          OnDblClick = dbgUsersDblClick
           Columns = <
             item
               Expanded = False
               FieldName = 'id'
+              Width = 59
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'first_name'
+              FieldName = 'book_title'
+              Width = 309
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'last_name'
+              FieldName = 'customer_name'
+              Width = 218
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'date_of_birth'
-              Width = 188
+              FieldName = 'lending_start'
+              Width = 162
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'note'
-              Width = 179
+              FieldName = 'lending_end'
+              Width = 157
               Visible = True
             end>
         end
         object pnlActions: TPanel
           Left = 0
           Top = 0
-          Width = 822
+          Width = 960
           Height = 77
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitWidth = 816
-          object lblName: TLabel
+          object lblLendingStatus: TLabel
             Left = 9
             Top = 13
-            Width = 304
+            Width = 129
             Height = 20
             AutoSize = False
-            Caption = 'Customer name'
+            Caption = 'Lending Status'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
             Font.Height = -15
@@ -122,8 +131,8 @@ object CustomerForm: TCustomerForm
             ParentFont = False
           end
           object btnSearch: TButton
-            Left = 192
-            Top = 38
+            Left = 144
+            Top = 39
             Width = 121
             Height = 29
             Caption = 'Search'
@@ -136,35 +145,43 @@ object CustomerForm: TCustomerForm
             TabOrder = 0
             OnClick = btnSearchClick
           end
-          object edtName: TEdit
-            Left = 9
+          object dbnAuthor: TDBNavigator
+            Left = 271
             Top = 39
-            Width = 177
+            Width = 58
+            Height = 27
+            DataSource = dsLending
+            VisibleButtons = [nbRefresh]
+            TabOrder = 1
+            OnClick = dbnAuthorClick
+          end
+          object cmbStatus: TComboBox
+            Left = 9
+            Top = 40
+            Width = 128
             Height = 28
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            Style = csDropDownList
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
             Font.Height = -15
             Font.Name = 'Segoe UI'
             Font.Style = []
             ParentFont = False
-            TabOrder = 1
-          end
-          object dbnCustomer: TDBNavigator
-            Left = 319
-            Top = 38
-            Width = 74
-            Height = 27
-            DataSource = dsCustomer
-            VisibleButtons = [nbDelete, nbRefresh]
             TabOrder = 2
-            OnClick = dbnCustomerClick
+            Items.Strings = (
+              'Open'
+              'Closed')
           end
         end
         object pnlNavigation: TPanel
           AlignWithMargins = True
           Left = 0
           Top = 496
-          Width = 822
+          Width = 960
           Height = 37
           Margins.Left = 0
           Margins.Top = 5
@@ -173,12 +190,10 @@ object CustomerForm: TCustomerForm
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 2
-          ExplicitTop = 487
-          ExplicitWidth = 816
           object lblPageInfo: TLabel
             Left = 120
             Top = 0
-            Width = 576
+            Width = 714
             Height = 37
             Align = alClient
             Alignment = taCenter
@@ -189,7 +204,7 @@ object CustomerForm: TCustomerForm
           end
           object bbtnNextPage: TBitBtn
             AlignWithMargins = True
-            Left = 699
+            Left = 837
             Top = 3
             Width = 118
             Height = 34
@@ -255,7 +270,6 @@ object CustomerForm: TCustomerForm
             Layout = blGlyphRight
             TabOrder = 0
             OnClick = bbtnNextPageClick
-            ExplicitLeft = 693
           end
           object bbtnPrevPage: TBitBtn
             AlignWithMargins = True
@@ -329,81 +343,223 @@ object CustomerForm: TCustomerForm
       end
     end
     object TabSheet2: TTabSheet
-      Caption = 'New Customer'
+      Caption = 'New Lending'
       ImageIndex = 1
       OnShow = TabSheet2Show
       object pnlAuthorInfo: TPanel
         Left = 0
         Top = 0
-        Width = 408
+        Width = 960
         Height = 538
         Align = alClient
         BevelOuter = bvNone
+        Ctl3D = True
         ParentBackground = False
+        ParentCtl3D = False
         TabOrder = 0
+        ExplicitWidth = 954
+        ExplicitHeight = 529
         object lblID: TLabel
-          Left = 81
-          Top = 64
-          Width = 14
-          Height = 15
-          Alignment = taRightJustify
-          Caption = 'ID:'
-        end
-        object lblFirstName: TLabel
-          Left = 40
-          Top = 105
-          Width = 58
-          Height = 15
-          Alignment = taRightJustify
-          Caption = 'First name:'
-        end
-        object lblUserInfo: TLabel
           Left = 24
-          Top = 20
-          Width = 85
-          Height = 15
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
-          Caption = 'User Infomation'
-        end
-        object lblLastName: TLabel
-          Left = 38
-          Top = 151
-          Width = 57
+          Top = 28
+          Width = 60
           Height = 15
           Alignment = taRightJustify
-          Caption = 'Last name:'
-        end
-        object lblBirthDate: TLabel
-          Left = 44
-          Top = 192
-          Width = 55
-          Height = 15
-          Alignment = taRightJustify
-          Caption = 'Birth Date:'
-        end
-        object lblNote: TLabel
-          Left = 69
-          Top = 237
-          Width = 29
-          Height = 15
-          Alignment = taRightJustify
-          Caption = 'Note:'
+          Caption = 'Lending ID:'
         end
         object btnSave: TButton
-          Left = 229
-          Top = 379
+          Left = 214
+          Top = 383
           Width = 107
           Height = 25
           Caption = 'Save'
           TabOrder = 0
           OnClick = btnSaveClick
         end
+        object gbBookDetails: TGroupBox
+          Left = 24
+          Top = 72
+          Width = 297
+          Height = 141
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
+          Caption = 'Book Details'
+          TabOrder = 1
+          object lblBookID: TLabel
+            Left = 53
+            Top = 62
+            Width = 44
+            Height = 15
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            Alignment = taRightJustify
+            Caption = 'Book ID:'
+          end
+          object lblBookAuthor: TLabel
+            Left = 57
+            Top = 85
+            Width = 40
+            Height = 15
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            Alignment = taRightJustify
+            Caption = 'Author:'
+          end
+          object lblBookYear: TLabel
+            Left = 17
+            Top = 108
+            Width = 80
+            Height = 15
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            Alignment = taRightJustify
+            Caption = 'Year Published:'
+          end
+          object dbtForSelectedBookID: TDBText
+            Left = 118
+            Top = 62
+            Width = 163
+            Height = 21
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            DataField = 'id'
+            DataSource = dsBookOpt
+          end
+          object dbtForSelectedAuthor: TDBText
+            Left = 118
+            Top = 85
+            Width = 163
+            Height = 21
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            DataField = 'author'
+            DataSource = dsBookOpt
+          end
+          object dbtForSelectedYear: TDBText
+            Left = 118
+            Top = 108
+            Width = 163
+            Height = 21
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            DataField = 'pub_year'
+            DataSource = dsBookOpt
+          end
+          object dblcBook: TDBLookupComboBox
+            Left = 17
+            Top = 25
+            Width = 264
+            Height = 23
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            KeyField = 'id'
+            ListField = 'title'
+            ListSource = dsBookOpt
+            TabOrder = 0
+          end
+        end
+        object gbCustomerDetails: TGroupBox
+          Left = 24
+          Top = 232
+          Width = 297
+          Height = 133
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
+          Caption = 'Customer Details'
+          TabOrder = 2
+          object lblCustomerID: TLabel
+            Left = 28
+            Top = 74
+            Width = 69
+            Height = 15
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            Alignment = taRightJustify
+            Caption = 'Customer ID:'
+          end
+          object lblLastName: TLabel
+            Left = 38
+            Top = 97
+            Width = 59
+            Height = 15
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            Alignment = taRightJustify
+            Caption = 'Last Name:'
+          end
+          object dbtForSelectedCustomerID: TDBText
+            Left = 118
+            Top = 74
+            Width = 163
+            Height = 21
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            DataField = 'id'
+            DataSource = dsCustomerOpt
+          end
+          object dbtForSelectedLastName: TDBText
+            Left = 118
+            Top = 97
+            Width = 163
+            Height = 21
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            DataField = 'last_name'
+            DataSource = dsCustomerOpt
+          end
+          object dblcCustomer: TDBLookupComboBox
+            Left = 16
+            Top = 25
+            Width = 265
+            Height = 23
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            KeyField = 'id'
+            ListField = 'first_name'
+            ListSource = dsCustomerOpt
+            TabOrder = 0
+          end
+        end
+        object btnTerminateLending: TButton
+          Left = 24
+          Top = 383
+          Width = 169
+          Height = 25
+          Caption = 'Terminate Lending'
+          TabOrder = 3
+          OnClick = btnTerminateLendingClick
+        end
         object edtID: TEdit
-          Left = 104
-          Top = 61
+          Left = 93
+          Top = 25
           Width = 113
           Height = 23
           Margins.Left = 4
@@ -411,79 +567,7 @@ object CustomerForm: TCustomerForm
           Margins.Right = 4
           Margins.Bottom = 4
           ReadOnly = True
-          TabOrder = 1
-        end
-        object edtFullname: TEdit
-          Left = 105
-          Top = 102
-          Width = 208
-          Height = 23
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
-          TabOrder = 2
-        end
-        object edtPassword: TEdit
-          Left = 104
-          Top = 148
-          Width = 208
-          Height = 23
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
-          PasswordChar = '*'
-          TabOrder = 3
-        end
-        object dtpBirthDate: TDateTimePicker
-          Left = 105
-          Top = 188
-          Width = 145
-          Height = 23
-          Date = 45112.000000000000000000
-          Time = 0.874582719909085400
           TabOrder = 4
-        end
-        object memNote: TMemo
-          Left = 105
-          Top = 234
-          Width = 231
-          Height = 111
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
-          TabOrder = 5
-        end
-      end
-      object pnlLendings: TPanel
-        Left = 408
-        Top = 0
-        Width = 414
-        Height = 538
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Align = alRight
-        TabOrder = 1
-        object DBGrid1: TDBGrid
-          Left = 1
-          Top = 1
-          Width = 412
-          Height = 536
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
-          Align = alClient
-          TabOrder = 0
-          TitleFont.Charset = DEFAULT_CHARSET
-          TitleFont.Color = clWindowText
-          TitleFont.Height = -12
-          TitleFont.Name = 'Segoe UI'
-          TitleFont.Style = []
         end
       end
     end
@@ -498,7 +582,7 @@ object CustomerForm: TCustomerForm
       object pnlRawData: TPanel
         Left = 0
         Top = 0
-        Width = 822
+        Width = 960
         Height = 538
         Margins.Left = 4
         Margins.Top = 4
@@ -509,7 +593,7 @@ object CustomerForm: TCustomerForm
         object memRawResponse: TMemo
           Left = 1
           Top = 1
-          Width = 820
+          Width = 958
           Height = 536
           Margins.Left = 4
           Margins.Top = 4
@@ -524,13 +608,12 @@ object CustomerForm: TCustomerForm
       end
     end
   end
-  object dsCustomer: TDataSource
-    DataSet = fdmemCustomer
-    Left = 40
-    Top = 449
+  object dsLending: TDataSource
+    DataSet = fdmemLending
+    Left = 600
+    Top = 489
   end
-  object fdmemCustomer: TFDMemTable
-    BeforeDelete = fdmemCustomerBeforeDelete
+  object fdmemLending: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
@@ -538,33 +621,38 @@ object CustomerForm: TCustomerForm
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 40
-    Top = 385
-    object fdmemCustomerid: TIntegerField
+    Left = 600
+    Top = 425
+    object fdmemLendingid: TIntegerField
       Alignment = taLeftJustify
       DisplayLabel = 'ID'
       FieldName = 'id'
     end
-    object fdmemCustomerEmail: TStringField
-      DisplayLabel = 'First Name'
-      FieldName = 'first_name'
-      Required = True
+    object fdmemLendingBookTitle: TStringField
+      DisplayLabel = 'Book'
+      FieldName = 'book_title'
+      Size = 200
     end
-    object fdmemCustomerlast_name: TStringField
-      DisplayLabel = 'Last Name'
-      FieldName = 'last_name'
+    object fdmemLendingCustomerName: TStringField
+      DisplayLabel = 'Customer'
+      FieldName = 'customer_name'
     end
-    object fdmemCustomerdate_of_birth: TDateField
-      DisplayLabel = 'Date of Birth'
-      FieldName = 'date_of_birth'
-      DisplayFormat = 'mmm dd, yyyy'
+    object fdmemLendinLendingStart: TDateTimeField
+      DisplayLabel = 'Lending Start'
+      FieldName = 'lending_start'
     end
-    object fdmemCustomernote: TStringField
-      DisplayLabel = 'Note'
-      FieldName = 'note'
+    object fdmemLendingLendingEnd: TDateTimeField
+      DisplayLabel = 'Lending End'
+      FieldName = 'lending_end'
+    end
+    object fdmemLendingBookID: TIntegerField
+      FieldName = 'book_id'
+    end
+    object fdmemLendingCustomerID: TIntegerField
+      FieldName = 'customer_id'
     end
   end
-  object fdmemCustomerLending: TFDMemTable
+  object fdmemCustomerOpt: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
@@ -572,12 +660,49 @@ object CustomerForm: TCustomerForm
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 604
-    Top = 333
+    Left = 732
+    Top = 421
+    object fdmemCustomerOptid: TIntegerField
+      FieldName = 'id'
+    end
+    object fdmemCustomerOptFirstName: TStringField
+      FieldName = 'first_name'
+    end
+    object fdmemCustomerOptLastName: TStringField
+      FieldName = 'last_name'
+    end
   end
-  object dsCustomerLending: TDataSource
-    DataSet = fdmemCustomerLending
-    Left = 604
-    Top = 405
+  object dsCustomerOpt: TDataSource
+    DataSet = fdmemCustomerOpt
+    Left = 732
+    Top = 493
+  end
+  object fdmemBookOpt: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 852
+    Top = 421
+    object fdmemBookOptid: TIntegerField
+      FieldName = 'id'
+    end
+    object fdmemBookOpttitle: TStringField
+      FieldName = 'title'
+    end
+    object fdmemBookOptauthor: TStringField
+      FieldName = 'author'
+    end
+    object fdmemBookOptPubYear: TIntegerField
+      FieldName = 'pub_year'
+    end
+  end
+  object dsBookOpt: TDataSource
+    DataSet = fdmemBookOpt
+    Left = 852
+    Top = 493
   end
 end

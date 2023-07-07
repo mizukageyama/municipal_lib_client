@@ -114,7 +114,7 @@ end;
 
 procedure TAuthorForm.TabSheet2Show(Sender: TObject);
 begin
-  if (TabSheet2.Caption = 'New Author') and IsNewData then
+  if IsNewData then
   begin
     AuthorForm.Height := 298;
     edtID.Text := '*Auto Generated*';
@@ -133,7 +133,8 @@ end;
 
 procedure TAuthorForm.TabSheet3Show(Sender: TObject);
 begin
-  AuthorForm.Height := 609;
+  IsNewData := True;
+  TabSheet2.Caption := 'New Author';
   memRawResponse.Lines.Add(CurrentResponse);
   memRawResponse.SelStart := 0;
   memRawResponse.SelLength := 0;

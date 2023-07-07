@@ -109,20 +109,8 @@
             <Form>LoginForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="NewLendingFrm.pas">
-            <Form>NewLendingForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="CancelLendingFrm.pas">
-            <Form>CancelLendingForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UserFrm.pas">
-            <Form>UserForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="BookFrm.pas">
-            <Form>BookForm</Form>
+        <DCCReference Include="LendingFrm.pas">
+            <Form>LendingForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="CustomerFrm.pas">

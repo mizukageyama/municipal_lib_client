@@ -18,26 +18,26 @@ object MainForm: TMainForm
     ParentBiDiMode = False
     Left = 40
     Top = 24
+    object Account1: TMenuItem
+      Caption = 'Account'
+      object Change1: TMenuItem
+        Action = actChangePassword
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object Logout2: TMenuItem
+        Action = actLogout
+      end
+    end
     object Lendings1: TMenuItem
       Caption = 'Lendings'
       object Newlending1: TMenuItem
         Action = actNewLending
       end
-      object CancelLending1: TMenuItem
-        Action = actCancelLending
-      end
-      object N1: TMenuItem
-        Caption = '-'
-      end
-      object Logout1: TMenuItem
-        Action = actLogout
-      end
-      object Exit1: TMenuItem
-        Action = actExit
-      end
     end
     object DatabaseMaintainace1: TMenuItem
-      Caption = 'Database Maintenace'
+      Caption = 'Library Maintenace'
       object Authortable1: TMenuItem
         Action = actAuthorTable
       end
@@ -58,10 +58,6 @@ object MainForm: TMainForm
     object actNewLending: TAction
       Caption = '&New lending'
       OnExecute = actNewLendingExecute
-    end
-    object actCancelLending: TAction
-      Caption = '&Cancel lending'
-      OnExecute = actCancelLendingExecute
     end
     object actAuthorTable: TAction
       Caption = '&Author table...'
@@ -86,6 +82,9 @@ object MainForm: TMainForm
     object actLogout: TAction
       Caption = '&Log out'
       OnExecute = actLogoutExecute
+    end
+    object actChangePassword: TAction
+      Caption = 'Change &Password'
     end
   end
 end

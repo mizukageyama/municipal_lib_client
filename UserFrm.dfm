@@ -4,7 +4,7 @@ object UserForm: TUserForm
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Users'
   ClientHeight = 571
-  ClientWidth = 574
+  ClientWidth = 635
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,7 +21,7 @@ object UserForm: TUserForm
     AlignWithMargins = True
     Left = 0
     Top = 3
-    Width = 574
+    Width = 635
     Height = 568
     Margins.Left = 0
     Margins.Right = 0
@@ -29,22 +29,26 @@ object UserForm: TUserForm
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 629
+    ExplicitHeight = 559
     object TabSheet1: TTabSheet
       Caption = 'User Table'
       OnShow = TabSheet1Show
       object pnlGrid: TPanel
         Left = 0
         Top = 0
-        Width = 566
+        Width = 627
         Height = 538
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 621
+        ExplicitHeight = 529
         object dbgUsers: TDBGrid
           AlignWithMargins = True
           Left = 6
           Top = 77
-          Width = 554
+          Width = 615
           Height = 414
           Margins.Left = 6
           Margins.Top = 0
@@ -58,18 +62,17 @@ object UserForm: TUserForm
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
+          ReadOnly = True
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
           TitleFont.Height = -12
           TitleFont.Name = 'Segoe UI'
           TitleFont.Style = []
-          OnDblClick = dbgUsersDblClick
           Columns = <
             item
               Expanded = False
               FieldName = 'id'
-              Width = 64
               Visible = True
             end
             item
@@ -81,24 +84,19 @@ object UserForm: TUserForm
             item
               Expanded = False
               FieldName = 'last_login'
-              Width = 153
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'deleted'
-              Width = 55
+              Width = 270
               Visible = True
             end>
         end
         object pnlActions: TPanel
           Left = 0
           Top = 0
-          Width = 566
+          Width = 627
           Height = 77
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
+          ExplicitWidth = 621
           object lblUserEmail: TLabel
             Left = 9
             Top = 13
@@ -143,11 +141,11 @@ object UserForm: TUserForm
           end
           object dbnAuthor: TDBNavigator
             Left = 319
-            Top = 39
-            Width = 240
-            Height = 28
+            Top = 38
+            Width = 74
+            Height = 27
             DataSource = dsUser
-            VisibleButtons = [nbInsert, nbDelete, nbEdit, nbPost, nbCancel, nbRefresh]
+            VisibleButtons = [nbDelete, nbRefresh]
             TabOrder = 2
             OnClick = dbnAuthorClick
           end
@@ -156,7 +154,7 @@ object UserForm: TUserForm
           AlignWithMargins = True
           Left = 0
           Top = 496
-          Width = 566
+          Width = 627
           Height = 37
           Margins.Left = 0
           Margins.Top = 5
@@ -165,10 +163,12 @@ object UserForm: TUserForm
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 2
+          ExplicitTop = 487
+          ExplicitWidth = 621
           object lblPageInfo: TLabel
             Left = 120
             Top = 0
-            Width = 320
+            Width = 381
             Height = 37
             Align = alClient
             Alignment = taCenter
@@ -179,7 +179,7 @@ object UserForm: TUserForm
           end
           object bbtnNextPage: TBitBtn
             AlignWithMargins = True
-            Left = 443
+            Left = 504
             Top = 3
             Width = 118
             Height = 34
@@ -245,6 +245,7 @@ object UserForm: TUserForm
             Layout = blGlyphRight
             TabOrder = 0
             OnClick = bbtnNextPageClick
+            ExplicitLeft = 498
           end
           object bbtnPrevPage: TBitBtn
             AlignWithMargins = True
@@ -324,12 +325,14 @@ object UserForm: TUserForm
       object pnlAuthorInfo: TPanel
         Left = 0
         Top = 0
-        Width = 566
-        Height = 225
-        Align = alTop
+        Width = 627
+        Height = 538
+        Align = alClient
         BevelOuter = bvNone
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 725
+        ExplicitHeight = 513
         object lblID: TLabel
           Left = 81
           Top = 64
@@ -346,14 +349,6 @@ object UserForm: TUserForm
           Alignment = taRightJustify
           Caption = 'Email:'
         end
-        object lblLastLogin: TLabel
-          Left = 44
-          Top = 144
-          Width = 54
-          Height = 15
-          Alignment = taRightJustify
-          Caption = 'Last Login'
-        end
         object lblUserInfo: TLabel
           Left = 24
           Top = 20
@@ -365,22 +360,21 @@ object UserForm: TUserForm
           Margins.Bottom = 4
           Caption = 'User Infomation'
         end
-        object dtpBirthDate: TDateTimePicker
-          Left = 104
-          Top = 140
-          Width = 209
-          Height = 23
-          Date = 45112.000000000000000000
-          Time = 0.874582719909085400
-          TabOrder = 0
+        object lblPassword: TLabel
+          Left = 42
+          Top = 151
+          Width = 53
+          Height = 15
+          Alignment = taRightJustify
+          Caption = 'Password:'
         end
         object btnSave: TButton
-          Left = 437
-          Top = 179
+          Left = 493
+          Top = 203
           Width = 107
           Height = 25
           Caption = 'Save'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnSaveClick
         end
         object edtID: TEdit
@@ -393,7 +387,7 @@ object UserForm: TUserForm
           Margins.Right = 4
           Margins.Bottom = 4
           ReadOnly = True
-          TabOrder = 2
+          TabOrder = 1
         end
         object edtFullname: TEdit
           Left = 105
@@ -404,43 +398,20 @@ object UserForm: TUserForm
           Margins.Top = 4
           Margins.Right = 4
           Margins.Bottom = 4
+          TabOrder = 2
+        end
+        object edtPassword: TEdit
+          Left = 104
+          Top = 148
+          Width = 208
+          Height = 23
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
+          PasswordChar = '*'
           TabOrder = 3
         end
-        object CheckBox1: TCheckBox
-          Left = 100
-          Top = 240
-          Width = 121
-          Height = 21
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
-          Caption = 'CheckBox1'
-          TabOrder = 4
-        end
-        object chkIsDisable: TCheckBox
-          Left = 104
-          Top = 181
-          Width = 121
-          Height = 21
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
-          Caption = 'Disabled'
-          TabOrder = 5
-        end
-      end
-      object pnlBooks: TPanel
-        Left = 0
-        Top = 225
-        Width = 566
-        Height = 313
-        Align = alClient
-        BevelOuter = bvNone
-        ParentBackground = False
-        TabOrder = 1
-        Visible = False
       end
     end
     object TabSheet3: TTabSheet
@@ -454,7 +425,7 @@ object UserForm: TUserForm
       object pnlRawData: TPanel
         Left = 0
         Top = 0
-        Width = 566
+        Width = 627
         Height = 538
         Margins.Left = 4
         Margins.Top = 4
@@ -465,7 +436,7 @@ object UserForm: TUserForm
         object memRawResponse: TMemo
           Left = 1
           Top = 1
-          Width = 564
+          Width = 625
           Height = 536
           Margins.Left = 4
           Margins.Top = 4
@@ -486,7 +457,6 @@ object UserForm: TUserForm
     Top = 449
   end
   object fdmemUser: TFDMemTable
-    BeforePost = fdmemUserBeforePost
     BeforeDelete = fdmemUserBeforeDelete
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -502,21 +472,14 @@ object UserForm: TUserForm
       DisplayLabel = 'ID'
       FieldName = 'id'
     end
-    object fdmemUserFullname: TStringField
+    object fdmemUserEmail: TStringField
       DisplayLabel = 'Email'
       FieldName = 'email'
       Required = True
     end
-    object fdmemUserDOB: TDateField
+    object fdmemUserlastLogin: TDateTimeField
       DisplayLabel = 'Last Login'
       FieldName = 'last_login'
-      Required = True
-      DisplayFormat = 'mmm dd, yyyy'
-      EditMask = '!99/99/0000;1;_'
-    end
-    object fdmemUserdeleted: TBooleanField
-      DisplayLabel = 'Deleted'
-      FieldName = 'deleted'
     end
   end
 end

@@ -73,7 +73,7 @@ begin
     end
     else
       ShowMessage('Username or password does not match');
-  end, nil, True).Get('/api/login');
+  end, nil, True).GET('/api/login');
 end;
 
 procedure TLoginForm.FormClose(Sender: TObject; var Action: TCloseAction);

@@ -26,7 +26,7 @@ object AuthorForm: TAuthorForm
     Margins.Left = 0
     Margins.Right = 0
     Margins.Bottom = 0
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Align = alClient
     TabOrder = 0
     ExplicitWidth = 568
@@ -42,8 +42,6 @@ object AuthorForm: TAuthorForm
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 560
-        ExplicitHeight = 529
         object dbgAuthors: TDBGrid
           AlignWithMargins = True
           Left = 6
@@ -113,7 +111,6 @@ object AuthorForm: TAuthorForm
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitWidth = 560
           object lblAuthorName: TLabel
             Left = 9
             Top = 13
@@ -180,8 +177,6 @@ object AuthorForm: TAuthorForm
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 2
-          ExplicitTop = 487
-          ExplicitWidth = 560
           object lblPageInfo: TLabel
             Left = 120
             Top = 0
@@ -262,7 +257,6 @@ object AuthorForm: TAuthorForm
             Layout = blGlyphRight
             TabOrder = 0
             OnClick = bbtnNextPageClick
-            ExplicitLeft = 437
           end
           object bbtnPrevPage: TBitBtn
             AlignWithMargins = True
@@ -348,6 +342,7 @@ object AuthorForm: TAuthorForm
         BevelOuter = bvNone
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 560
         object lblID: TLabel
           Left = 81
           Top = 64
@@ -435,6 +430,8 @@ object AuthorForm: TAuthorForm
         ParentBackground = False
         TabOrder = 1
         Visible = False
+        ExplicitWidth = 560
+        ExplicitHeight = 304
         object dbgAuthorBooks: TDBGrid
           Left = 0
           Top = 0
