@@ -34,20 +34,8 @@ Coordinates=297,212,84,58
 [pnlNavigation]
 Coordinates=10,212,93,58
 
-[pnlAuthorInfo]
-Coordinates=498,144,91,58
-
-[fdmemCustomerEmail]
-Coordinates=629,56,141,36
-
-[lblUserInfo]
-Coordinates=412,144,76,58
-
 [dbgCustomers]
 Coordinates=292,280,98,36
-
-[edtPassword]
-Coordinates=10,144,89,58
 
 [pnlGrid]
 Coordinates=391,10,56,58
@@ -67,20 +55,14 @@ Coordinates=461,212,66,58
 [memRawResponse]
 Coordinates=204,144,126,58
 
-[edtFullname]
-Coordinates=109,144,85,58
-
 [TabSheet3]
 Coordinates=205,280,77,36
-
-[fdmemCustomerid]
-Coordinates=629,221,119,36
 
 [dsCustomer]
 Coordinates=182,78,84,36
 
 []
-Coordinates=629,276,161,36
+Coordinates=412,144,76,58
 
 [lblName]
 Coordinates=129,10,62,58
@@ -91,4 +73,19 @@ Coordinates=391,212,60,58
 
 [lblLastName]
 Coordinates=537,212,84,58
+
+[edtFirstName]
+Coordinates=109,144,85,58
+
+[edtLastName]
+Coordinates=10,144,89,58
+
+[fdmemCustomerFirstName]
+Coordinates=629,56,141,36
+
+[fdmemCustomerId]
+Coordinates=629,221,119,36
+
+[pnlCustomerInfo]
+Coordinates=498,144,91,58
 

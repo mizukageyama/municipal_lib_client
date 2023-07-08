@@ -50,6 +50,8 @@ object LendingForm: TLendingForm
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 954
+        ExplicitHeight = 529
         object dbgUsers: TDBGrid
           AlignWithMargins = True
           Left = 6
@@ -116,6 +118,7 @@ object LendingForm: TLendingForm
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
+          ExplicitWidth = 954
           object lblLendingStatus: TLabel
             Left = 9
             Top = 13
@@ -190,6 +193,8 @@ object LendingForm: TLendingForm
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 2
+          ExplicitTop = 487
+          ExplicitWidth = 954
           object lblPageInfo: TLabel
             Left = 120
             Top = 0
@@ -270,6 +275,7 @@ object LendingForm: TLendingForm
             Layout = blGlyphRight
             TabOrder = 0
             OnClick = bbtnNextPageClick
+            ExplicitLeft = 831
           end
           object bbtnPrevPage: TBitBtn
             AlignWithMargins = True
@@ -357,19 +363,17 @@ object LendingForm: TLendingForm
         ParentBackground = False
         ParentCtl3D = False
         TabOrder = 0
-        ExplicitWidth = 954
-        ExplicitHeight = 529
         object lblID: TLabel
-          Left = 24
-          Top = 28
+          Left = 27
+          Top = 33
           Width = 60
           Height = 15
           Alignment = taRightJustify
           Caption = 'Lending ID:'
         end
         object btnSave: TButton
-          Left = 214
-          Top = 383
+          Left = 217
+          Top = 391
           Width = 107
           Height = 25
           Caption = 'Save'
@@ -377,8 +381,8 @@ object LendingForm: TLendingForm
           OnClick = btnSaveClick
         end
         object gbBookDetails: TGroupBox
-          Left = 24
-          Top = 72
+          Left = 27
+          Top = 76
           Width = 297
           Height = 141
           Margins.Left = 4
@@ -475,8 +479,8 @@ object LendingForm: TLendingForm
           end
         end
         object gbCustomerDetails: TGroupBox
-          Left = 24
-          Top = 232
+          Left = 27
+          Top = 240
           Width = 297
           Height = 133
           Margins.Left = 4
@@ -549,8 +553,8 @@ object LendingForm: TLendingForm
           end
         end
         object btnTerminateLending: TButton
-          Left = 24
-          Top = 383
+          Left = 27
+          Top = 391
           Width = 169
           Height = 25
           Caption = 'Terminate Lending'
@@ -558,8 +562,8 @@ object LendingForm: TLendingForm
           OnClick = btnTerminateLendingClick
         end
         object edtID: TEdit
-          Left = 93
-          Top = 25
+          Left = 105
+          Top = 30
           Width = 113
           Height = 23
           Margins.Left = 4

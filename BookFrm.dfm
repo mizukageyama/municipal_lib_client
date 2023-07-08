@@ -4,7 +4,7 @@ object BookForm: TBookForm
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Books'
   ClientHeight = 571
-  ClientWidth = 961
+  ClientWidth = 945
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -29,12 +29,12 @@ object BookForm: TBookForm
     AlignWithMargins = True
     Left = 0
     Top = 3
-    Width = 961
+    Width = 945
     Height = 568
     Margins.Left = 0
     Margins.Right = 0
     Margins.Bottom = 0
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
     ExplicitWidth = 955
@@ -45,16 +45,17 @@ object BookForm: TBookForm
       object pnlGrid: TPanel
         Left = 0
         Top = 0
-        Width = 953
+        Width = 937
         Height = 538
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 953
         object dbgUsers: TDBGrid
           AlignWithMargins = True
           Left = 6
           Top = 77
-          Width = 941
+          Width = 925
           Height = 414
           Margins.Left = 6
           Margins.Top = 0
@@ -75,6 +76,7 @@ object BookForm: TBookForm
           TitleFont.Height = -12
           TitleFont.Name = 'Segoe UI'
           TitleFont.Style = []
+          OnDblClick = dbgUsersDblClick
           Columns = <
             item
               Expanded = False
@@ -103,11 +105,12 @@ object BookForm: TBookForm
         object pnlActions: TPanel
           Left = 0
           Top = 0
-          Width = 953
+          Width = 937
           Height = 77
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
+          ExplicitWidth = 953
           object lblBookTitle: TLabel
             Left = 9
             Top = 13
@@ -165,7 +168,7 @@ object BookForm: TBookForm
           AlignWithMargins = True
           Left = 0
           Top = 496
-          Width = 953
+          Width = 937
           Height = 37
           Margins.Left = 0
           Margins.Top = 5
@@ -174,10 +177,11 @@ object BookForm: TBookForm
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 2
+          ExplicitWidth = 953
           object lblPageInfo: TLabel
             Left = 120
             Top = 0
-            Width = 707
+            Width = 691
             Height = 37
             Align = alClient
             Alignment = taCenter
@@ -188,7 +192,7 @@ object BookForm: TBookForm
           end
           object bbtnNextPage: TBitBtn
             AlignWithMargins = True
-            Left = 830
+            Left = 814
             Top = 3
             Width = 118
             Height = 34
@@ -254,6 +258,7 @@ object BookForm: TBookForm
             Layout = blGlyphRight
             TabOrder = 0
             OnClick = bbtnNextPageClick
+            ExplicitLeft = 830
           end
           object bbtnPrevPage: TBitBtn
             AlignWithMargins = True
@@ -333,7 +338,7 @@ object BookForm: TBookForm
       object pnlAuthorInfo: TPanel
         Left = 0
         Top = 0
-        Width = 392
+        Width = 435
         Height = 538
         Align = alClient
         BevelOuter = bvNone
@@ -341,53 +346,42 @@ object BookForm: TBookForm
         ParentBackground = False
         ParentCtl3D = False
         TabOrder = 0
-        ExplicitWidth = 385
+        ExplicitWidth = 441
         object lblID: TLabel
-          Left = 112
-          Top = 75
+          Left = 134
+          Top = 39
           Width = 14
           Height = 15
           Alignment = taRightJustify
           Caption = 'ID:'
         end
         object lblYear: TLabel
-          Left = 48
-          Top = 143
+          Left = 70
+          Top = 108
           Width = 80
           Height = 15
           Alignment = taRightJustify
           Caption = 'Year Published:'
         end
-        object lblBookInfo: TLabel
-          Left = 55
-          Top = 31
-          Width = 89
-          Height = 15
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
-          Caption = 'Book Infomation'
-        end
         object lblAuthor: TLabel
-          Left = 85
-          Top = 176
+          Left = 107
+          Top = 140
           Width = 43
           Height = 15
           Alignment = taRightJustify
           Caption = 'Author: '
         end
         object lblTitle: TLabel
-          Left = 103
-          Top = 109
+          Left = 125
+          Top = 73
           Width = 25
           Height = 15
           Alignment = taRightJustify
           Caption = 'Title:'
         end
         object btnSave: TButton
-          Left = 236
-          Top = 230
+          Left = 258
+          Top = 194
           Width = 107
           Height = 25
           Caption = 'Save'
@@ -395,8 +389,8 @@ object BookForm: TBookForm
           OnClick = btnSaveClick
         end
         object edtID: TEdit
-          Left = 135
-          Top = 72
+          Left = 157
+          Top = 36
           Width = 113
           Height = 23
           Margins.Left = 4
@@ -407,8 +401,8 @@ object BookForm: TBookForm
           TabOrder = 1
         end
         object edtTitle: TEdit
-          Left = 135
-          Top = 105
+          Left = 157
+          Top = 67
           Width = 208
           Height = 23
           Margins.Left = 4
@@ -418,8 +412,8 @@ object BookForm: TBookForm
           TabOrder = 2
         end
         object sedYear: TSpinEdit
-          Left = 135
-          Top = 141
+          Left = 157
+          Top = 105
           Width = 89
           Height = 24
           Margins.Left = 4
@@ -432,8 +426,8 @@ object BookForm: TBookForm
           Value = 2023
         end
         object dblcAuthor: TDBLookupComboBox
-          Left = 135
-          Top = 173
+          Left = 157
+          Top = 137
           Width = 208
           Height = 23
           Margins.Left = 4
@@ -447,9 +441,9 @@ object BookForm: TBookForm
         end
       end
       object pblBookHistory: TPanel
-        Left = 392
+        Left = 435
         Top = 0
-        Width = 561
+        Width = 502
         Height = 538
         Margins.Left = 4
         Margins.Top = 4
@@ -457,22 +451,47 @@ object BookForm: TBookForm
         Margins.Bottom = 4
         Align = alRight
         TabOrder = 1
-        object DBGrid1: TDBGrid
+        object dbgLendingHistory: TDBGrid
           Left = 1
           Top = 1
-          Width = 559
+          Width = 500
           Height = 536
           Margins.Left = 4
           Margins.Top = 4
           Margins.Right = 4
           Margins.Bottom = 4
           Align = alClient
+          DataSource = dsLendingHistory
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
           TitleFont.Height = -12
           TitleFont.Name = 'Segoe UI'
           TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id'
+              Width = 51
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'customer_name'
+              Width = 190
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'lending_start'
+              Width = 155
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'lending_end'
+              Visible = True
+            end>
         end
       end
     end
@@ -487,7 +506,7 @@ object BookForm: TBookForm
       object pnlRawData: TPanel
         Left = 0
         Top = 0
-        Width = 953
+        Width = 937
         Height = 538
         Margins.Left = 4
         Margins.Top = 4
@@ -495,10 +514,11 @@ object BookForm: TBookForm
         Margins.Bottom = 4
         Align = alClient
         TabOrder = 0
+        ExplicitWidth = 953
         object memRawResponse: TMemo
           Left = 1
           Top = 1
-          Width = 951
+          Width = 935
           Height = 536
           Margins.Left = 4
           Margins.Top = 4
@@ -509,6 +529,7 @@ object BookForm: TBookForm
             '')
           ScrollBars = ssVertical
           TabOrder = 0
+          ExplicitWidth = 951
         end
       end
     end
@@ -529,7 +550,7 @@ object BookForm: TBookForm
     UpdateOptions.AutoCommitUpdates = True
     Left = 40
     Top = 385
-    object fdmemBookid: TIntegerField
+    object fdmemBookId: TIntegerField
       Alignment = taLeftJustify
       DisplayLabel = 'ID'
       FieldName = 'id'
@@ -575,7 +596,7 @@ object BookForm: TBookForm
     Left = 172
     Top = 453
   end
-  object FDMemTable1: TFDMemTable
+  object fdmemLendingHistory: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
@@ -585,8 +606,25 @@ object BookForm: TBookForm
     UpdateOptions.AutoCommitUpdates = True
     Left = 652
     Top = 253
+    object fdmemLendingHistoryLendingID: TIntegerField
+      DisplayLabel = 'ID'
+      FieldName = 'id'
+    end
+    object fdmemLendingHistoryCustomerName: TStringField
+      DisplayLabel = 'Customer'
+      FieldName = 'customer_name'
+    end
+    object fdmemLendingHistoryLendingStart: TDateTimeField
+      DisplayLabel = 'Lending Start'
+      FieldName = 'lending_start'
+    end
+    object fdmemLendingHistoryLendingEnd: TDateTimeField
+      DisplayLabel = 'Lending End'
+      FieldName = 'lending_end'
+    end
   end
-  object DataSource1: TDataSource
+  object dsLendingHistory: TDataSource
+    DataSet = fdmemLendingHistory
     Left = 652
     Top = 341
   end

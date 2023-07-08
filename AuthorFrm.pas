@@ -40,7 +40,6 @@ type
     TabSheet3: TTabSheet;
     pnlRawData: TPanel;
     memRawResponse: TMemo;
-    lblAuthorInfo: TLabel;
     dsAuthor: TDataSource;
     fdmemAuthor: TFDMemTable;
     fdmemAuthorid: TIntegerField;
@@ -107,16 +106,19 @@ end;
 
 procedure TAuthorForm.TabSheet1Show(Sender: TObject);
 begin
-  AuthorForm.Height := 609;
   IsNewData := True;
+  AuthorForm.Height := 609;
+  AuthorForm.Width := 586;
   TabSheet2.Caption := 'New Author';
 end;
 
 procedure TAuthorForm.TabSheet2Show(Sender: TObject);
 begin
+  pnlBooks.Visible := not IsNewData;
   if IsNewData then
   begin
-    AuthorForm.Height := 298;
+    AuthorForm.Height := 297;
+    AuthorForm.Width := 378;
     edtID.Text := '*Auto Generated*';
     edtFullname.Clear;
     dtpBirthDate.Date := Now;
@@ -134,6 +136,8 @@ end;
 procedure TAuthorForm.TabSheet3Show(Sender: TObject);
 begin
   IsNewData := True;
+  AuthorForm.Height := 609;
+  AuthorForm.Width := 586;
   TabSheet2.Caption := 'New Author';
   memRawResponse.Lines.Add(CurrentResponse);
   memRawResponse.SelStart := 0;

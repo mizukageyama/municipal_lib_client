@@ -36,7 +36,6 @@ type
     pnlAuthorInfo: TPanel;
     lblID: TLabel;
     lblEmail: TLabel;
-    lblUserInfo: TLabel;
     btnSave: TButton;
     edtID: TEdit;
     edtFullname: TEdit;
@@ -96,18 +95,21 @@ end;
 procedure TUserForm.TabSheet1Show(Sender: TObject);
 begin
   UserForm.Height := 609;
+  UserForm.Width := 671
 end;
 
 procedure TUserForm.TabSheet2Show(Sender: TObject);
 begin
-    UserForm.Height := 320;
-    edtID.Text := '*Auto Generated*';
-    edtEmail.Clear;
+  UserForm.Height := 305;
+  UserForm.Width := 440;
+  edtID.Text := '*Auto Generated*';
+  edtEmail.Clear;
 end;
 
 procedure TUserForm.TabSheet3Show(Sender: TObject);
 begin
   UserForm.Height := 609;
+  UserForm.Width := 671;
   memRawResponse.Lines.Add(CurrentResponse);
   memRawResponse.SelStart := 0;
   memRawResponse.SelLength := 0;

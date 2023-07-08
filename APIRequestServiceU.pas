@@ -50,7 +50,9 @@ begin
       ShowMessage(ErrorMessage);
     end
     else if Resp.StatusCode = 403 then
-      ShowMessage('You are now allowed for this action.');
+      ShowMessage('You are now allowed for this action.')
+    else
+        ShowMessage('Something went wrong');
   except
     on e: Exception do
       ShowMessage(e.toString);
@@ -90,7 +92,9 @@ begin
       ShowMessage(ErrorMessage);
     end
     else if Resp.StatusCode = 403 then
-      ShowMessage('You are now allowed for this action.');
+      ShowMessage('You are now allowed for this action.')
+    else
+      ShowMessage('Something went wrong');
   except
     on e: Exception do
       ShowMessage(e.toString);
@@ -126,7 +130,9 @@ begin
       ShowMessage(ErrorMessage);
     end
     else if Resp.StatusCode = 403 then
-      ShowMessage('You are now allowed for this action.');
+      ShowMessage('You are now allowed for this action.')
+    else
+        ShowMessage('Something went wrong');
   except
     on e: Exception do
       ShowMessage(e.toString);

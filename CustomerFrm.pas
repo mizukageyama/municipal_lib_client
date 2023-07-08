@@ -17,8 +17,8 @@ type
   TCustomerForm = class(TForm)
     dsCustomer: TDataSource;
     fdmemCustomer: TFDMemTable;
-    fdmemCustomerid: TIntegerField;
-    fdmemCustomerEmail: TStringField;
+    fdmemCustomerId: TIntegerField;
+    fdmemCustomerFirstName: TStringField;
     pcCustomer: TPageControl;
     TabSheet1: TTabSheet;
     pnlGrid: TPanel;
@@ -33,22 +33,21 @@ type
     bbtnNextPage: TBitBtn;
     bbtnPrevPage: TBitBtn;
     TabSheet2: TTabSheet;
-    pnlAuthorInfo: TPanel;
+    pnlCustomerInfo: TPanel;
     lblID: TLabel;
     lblFirstName: TLabel;
-    lblUserInfo: TLabel;
     btnSave: TButton;
     edtID: TEdit;
-    edtFullname: TEdit;
+    edtFirstName: TEdit;
     TabSheet3: TTabSheet;
     pnlRawData: TPanel;
     memRawResponse: TMemo;
-    edtPassword: TEdit;
+    edtLastName: TEdit;
     lblLastName: TLabel;
-    fdmemCustomerlast_name: TStringField;
-    fdmemCustomerdate_of_birth: TDateField;
-    fdmemCustomernote: TStringField;
-    dtpBirthDate: TDateTimePicker;
+    fdmemCustomerLastName: TStringField;
+    fdmemCustomerDOB: TDateField;
+    fdmemCustomerNote: TStringField;
+    dtpDOB: TDateTimePicker;
     lblBirthDate: TLabel;
     memNote: TMemo;
     lblNote: TLabel;
@@ -56,10 +55,15 @@ type
     DBGrid1: TDBGrid;
     fdmemCustomerLending: TFDMemTable;
     dsCustomerLending: TDataSource;
+    fdmemCustomerLendingId: TIntegerField;
+    fdmemCustomerLendingBookTitle: TStringField;
+    fdmemCustomerLendingStart: TDateTimeField;
+    fdmemCustomerLendingEnd: TDateTimeField;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure GetUsers(SearchKey: string = ''; PageParam: Integer = 1);
     procedure btnSearchClick(Sender: TObject);
+    procedure GetCustomerLendingHistory(CustomerID: Integer);
     procedure dbnCustomerClick(Sender: TObject; Button: TNavigateBtn);
     procedure fdmemCustomerBeforeDelete(DataSet: TDataSet);
     procedure bbtnNextPageClick(Sender: TObject);
@@ -69,11 +73,13 @@ type
     procedure TabSheet3Show(Sender: TObject);
     procedure btnSaveClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure dbgCustomersDblClick(Sender: TObject);
   private
     RESTClient: IMVCRESTClient;
     CurrentResponse: string;
     Pagination: TPaginationData;
     Loading: Boolean;
+    IsNewData: Boolean;
     function GetSearchKey: string;
     { Private declarations }
   public
@@ -105,18 +111,41 @@ end;
 
 procedure TCustomerForm.TabSheet1Show(Sender: TObject);
 begin
+  CustomerForm.Width := 930;
   CustomerForm.Height := 609;
+  isNewData := True;
+  TabSheet2.Caption := 'New Customer';
 end;
 
 procedure TCustomerForm.TabSheet2Show(Sender: TObject);
 begin
-    CustomerForm.Height := 320;
+  pnlLendings.Visible := not isNewData;
+  if isNewData then
+  begin
+    CustomerForm.Width := 416;
+    CustomerForm.Height := 494;
     edtID.Text := '*Auto Generated*';
-    edtName.Clear;
+    dtpDOB.Date := Now;
+    edtFirstName.Clear;
+    edtLastName.Clear;
+    memNote.Clear;
+  end
+  else
+  begin
+    edtID.Text := fdmemCustomerId.AsString;
+    dtpDOB.Date := fdmemCustomerDOB.Value;
+    edtFirstName.Text := fdmemCustomerFirstName.AsString;
+    edtLastName.Text := fdmemCustomerLastName.AsString;
+    memNote.Text := fdmemCustomerNote.AsString;
+    GetCustomerLendingHistory(fdmemCustomerId.Value);
+  end;
 end;
 
 procedure TCustomerForm.TabSheet3Show(Sender: TObject);
 begin
+  isNewData := True;
+  TabSheet2.Caption := 'New Customer';
+  CustomerForm.Width := 930;
   CustomerForm.Height := 609;
   memRawResponse.Lines.Add(CurrentResponse);
   memRawResponse.SelStart := 0;
@@ -133,30 +162,44 @@ procedure TCustomerForm.btnSaveClick(Sender: TObject);
 var
   JSONBody: TJSONObject;
   APIEndpoint: string;
-  UserEmail: string;
-  UserPassword: string;
+  CustomerFirstName: string;
+  CustomerLastName: string;
+  CustomerDOB: TDate;
+  CustomerNote: string;
 begin
-  UserEmail := edtFullname.Text;
-  UserPassword := edtPassword.Text;
+  CustomerFirstName := edtFirstName.Text;
+  CustomerLastName := edtLastName.Text;
+  CustomerDOB := dtpDOB.Date;
+  CustomerNote := memNote.Text;
 
-  if UserEmail.IsEmpty or UserPassword.IsEmpty then
+  if CustomerFirstName.IsEmpty or CustomerLastName.IsEmpty or (CustomerDOB = Now) then
   begin
     ShowMessage('Please fill all the fields');
     Exit;
   end;
 
   JSONBody := TJSONObject.Create;
-  JSONBody.AddPair('email', UserEmail);
-  JSONBody.AddPair('pwd', UserPassword);
+  JSONBody.AddPair('first_name', CustomerFirstName);
+  JSONBody.AddPair('last_name', CustomerLastName);
+  JSONBody.AddPair('date_of_birth', CustomerDOB);
+  JSONBody.AddPair('note', CustomerNote);
 
+  APIEndpoint := '/api/customers';
 
-  APIEndpoint := '/api/users';
-  if APIRequest.POST(RESTClient, APIEndpoint, JSONBody) then
+  if IsNewData then
   begin
-    GetUsers;
-    pcCustomer.ActivePageIndex := 0;
+    if APIRequest.POST(RESTClient, APIEndpoint, JSONBody) then
+    begin
+      GetUsers;
+      pcCustomer.ActivePageIndex := 0;
+    end
   end
-
+  else
+  begin
+    APIEndpoint := APIEndpoint + '/' + fdmemCustomerId.AsString;
+    if APIRequest.PUT(RESTClient, APIEndpoint, JSONBody) then
+      GetUsers;
+  end;
 end;
 
 procedure TCustomerForm.btnSearchClick(Sender: TObject);
@@ -168,6 +211,13 @@ begin
   end;
 
   GetUsers(GetSearchKey);
+end;
+
+procedure TCustomerForm.dbgCustomersDblClick(Sender: TObject);
+begin
+  isNewData := False;
+  TabSheet2.Caption := 'Information';
+  pcCustomer.ActivePageIndex := 1;
 end;
 
 procedure TCustomerForm.dbnCustomerClick(Sender: TObject; Button: TNavigateBtn);
@@ -186,7 +236,7 @@ begin
   Response := RESTClient.DataSetDelete('/api/customers', fdmemCustomerid.AsString);
   if not Response.StatusCode in [200] then
     raise Exception.Create(Response.Content);
-  GetUSers;
+  GetUsers;
 end;
 
 procedure TCustomerForm.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -250,6 +300,24 @@ begin
       ShowMessage(e.toString);
       RESTClient.ClearQueryParams;
     end;
+  end;
+end;
+
+procedure TCustomerForm.GetCustomerLendingHistory(CustomerID: Integer);
+var
+  Resp: IMVCRESTResponse;
+begin
+  Resp := RESTClient.SetBearerAuthorization(GlobalTokenManager.GetToken)
+    .Get('/api/lendings/customers/' + CustomerID.ToString);
+
+  if Resp.StatusCode = 200 then
+  begin
+    fdmemCustomerLending.Close;
+    fdmemCustomerLending.Open;
+    fdmemCustomerLending.LoadJSONArrayFromJSONObjectProperty('data',
+      Resp.Content, TMVCNameCase.ncSnakeCase);
+    fdmemCustomerLending.First;
+    RESTClient.ClearQueryParams;
   end;
 end;
 

@@ -26,7 +26,7 @@ object AuthorForm: TAuthorForm
     Margins.Left = 0
     Margins.Right = 0
     Margins.Bottom = 0
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
     ExplicitWidth = 568
@@ -344,52 +344,41 @@ object AuthorForm: TAuthorForm
         TabOrder = 0
         ExplicitWidth = 560
         object lblID: TLabel
-          Left = 81
-          Top = 64
+          Left = 83
+          Top = 40
           Width = 14
           Height = 15
           Alignment = taRightJustify
           Caption = 'ID:'
         end
         object lblFullname: TLabel
-          Left = 41
-          Top = 105
+          Left = 43
+          Top = 81
           Width = 57
           Height = 15
           Alignment = taRightJustify
           Caption = 'Full Name:'
         end
         object lblBirthDate: TLabel
-          Left = 43
-          Top = 144
+          Left = 45
+          Top = 120
           Width = 55
           Height = 15
           Alignment = taRightJustify
           Caption = 'Birth Date:'
         end
-        object lblAuthorInfo: TLabel
-          Left = 24
-          Top = 20
-          Width = 99
-          Height = 15
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
-          Caption = 'Author Infomation'
-        end
         object dtpBirthDate: TDateTimePicker
-          Left = 104
-          Top = 140
-          Width = 145
+          Left = 106
+          Top = 116
+          Width = 113
           Height = 23
           Date = 45112.000000000000000000
           Time = 0.874582719909085400
           TabOrder = 0
         end
         object btnSave: TButton
-          Left = 437
-          Top = 179
+          Left = 208
+          Top = 163
           Width = 107
           Height = 25
           Caption = 'Save'
@@ -397,8 +386,8 @@ object AuthorForm: TAuthorForm
           OnClick = btnSaveClick
         end
         object edtID: TEdit
-          Left = 104
-          Top = 61
+          Left = 106
+          Top = 37
           Width = 113
           Height = 23
           Margins.Left = 4
@@ -409,8 +398,8 @@ object AuthorForm: TAuthorForm
           TabOrder = 2
         end
         object edtFullname: TEdit
-          Left = 105
-          Top = 102
+          Left = 107
+          Top = 78
           Width = 208
           Height = 23
           Margins.Left = 4

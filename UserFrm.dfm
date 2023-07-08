@@ -4,7 +4,7 @@ object UserForm: TUserForm
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Users'
   ClientHeight = 571
-  ClientWidth = 635
+  ClientWidth = 659
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,7 +21,7 @@ object UserForm: TUserForm
     AlignWithMargins = True
     Left = 0
     Top = 3
-    Width = 635
+    Width = 659
     Height = 568
     Margins.Left = 0
     Margins.Right = 0
@@ -29,7 +29,7 @@ object UserForm: TUserForm
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 629
+    ExplicitWidth = 653
     ExplicitHeight = 559
     object TabSheet1: TTabSheet
       Caption = 'User Table'
@@ -37,18 +37,18 @@ object UserForm: TUserForm
       object pnlGrid: TPanel
         Left = 0
         Top = 0
-        Width = 627
+        Width = 651
         Height = 538
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 621
+        ExplicitWidth = 645
         ExplicitHeight = 529
         object dbgUsers: TDBGrid
           AlignWithMargins = True
           Left = 6
           Top = 77
-          Width = 615
+          Width = 639
           Height = 414
           Margins.Left = 6
           Margins.Top = 0
@@ -91,12 +91,12 @@ object UserForm: TUserForm
         object pnlActions: TPanel
           Left = 0
           Top = 0
-          Width = 627
+          Width = 651
           Height = 77
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitWidth = 621
+          ExplicitWidth = 645
           object lblUserEmail: TLabel
             Left = 9
             Top = 13
@@ -154,7 +154,7 @@ object UserForm: TUserForm
           AlignWithMargins = True
           Left = 0
           Top = 496
-          Width = 627
+          Width = 651
           Height = 37
           Margins.Left = 0
           Margins.Top = 5
@@ -164,11 +164,11 @@ object UserForm: TUserForm
           BevelOuter = bvNone
           TabOrder = 2
           ExplicitTop = 487
-          ExplicitWidth = 621
+          ExplicitWidth = 645
           object lblPageInfo: TLabel
             Left = 120
             Top = 0
-            Width = 381
+            Width = 405
             Height = 37
             Align = alClient
             Alignment = taCenter
@@ -179,7 +179,7 @@ object UserForm: TUserForm
           end
           object bbtnNextPage: TBitBtn
             AlignWithMargins = True
-            Left = 504
+            Left = 528
             Top = 3
             Width = 118
             Height = 34
@@ -245,7 +245,7 @@ object UserForm: TUserForm
             Layout = blGlyphRight
             TabOrder = 0
             OnClick = bbtnNextPageClick
-            ExplicitLeft = 498
+            ExplicitLeft = 522
           end
           object bbtnPrevPage: TBitBtn
             AlignWithMargins = True
@@ -325,52 +325,40 @@ object UserForm: TUserForm
       object pnlAuthorInfo: TPanel
         Left = 0
         Top = 0
-        Width = 627
+        Width = 651
         Height = 538
         Align = alClient
         BevelOuter = bvNone
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 725
-        ExplicitHeight = 513
+        ExplicitWidth = 627
         object lblID: TLabel
-          Left = 81
-          Top = 64
+          Left = 114
+          Top = 41
           Width = 14
           Height = 15
           Alignment = taRightJustify
           Caption = 'ID:'
         end
         object lblEmail: TLabel
-          Left = 66
-          Top = 105
+          Left = 99
+          Top = 82
           Width = 32
           Height = 15
           Alignment = taRightJustify
           Caption = 'Email:'
         end
-        object lblUserInfo: TLabel
-          Left = 24
-          Top = 20
-          Width = 85
-          Height = 15
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
-          Caption = 'User Infomation'
-        end
         object lblPassword: TLabel
-          Left = 42
-          Top = 151
+          Left = 75
+          Top = 128
           Width = 53
           Height = 15
           Alignment = taRightJustify
           Caption = 'Password:'
         end
         object btnSave: TButton
-          Left = 493
-          Top = 203
+          Left = 239
+          Top = 172
           Width = 107
           Height = 25
           Caption = 'Save'
@@ -378,8 +366,8 @@ object UserForm: TUserForm
           OnClick = btnSaveClick
         end
         object edtID: TEdit
-          Left = 104
-          Top = 61
+          Left = 137
+          Top = 38
           Width = 113
           Height = 23
           Margins.Left = 4
@@ -390,8 +378,8 @@ object UserForm: TUserForm
           TabOrder = 1
         end
         object edtFullname: TEdit
-          Left = 105
-          Top = 102
+          Left = 138
+          Top = 79
           Width = 208
           Height = 23
           Margins.Left = 4
@@ -401,8 +389,8 @@ object UserForm: TUserForm
           TabOrder = 2
         end
         object edtPassword: TEdit
-          Left = 104
-          Top = 148
+          Left = 137
+          Top = 125
           Width = 208
           Height = 23
           Margins.Left = 4
@@ -425,7 +413,7 @@ object UserForm: TUserForm
       object pnlRawData: TPanel
         Left = 0
         Top = 0
-        Width = 627
+        Width = 651
         Height = 538
         Margins.Left = 4
         Margins.Top = 4
@@ -436,7 +424,7 @@ object UserForm: TUserForm
         object memRawResponse: TMemo
           Left = 1
           Top = 1
-          Width = 625
+          Width = 649
           Height = 536
           Margins.Left = 4
           Margins.Top = 4

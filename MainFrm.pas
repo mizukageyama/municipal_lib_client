@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, System.Actions, Vcl.ActnList,
-  TokenManagerU;
+  TokenManagerU, NewPasswordFrm;
 
 type
   TMainForm = class(TForm)
@@ -38,6 +38,7 @@ type
     procedure actExitExecute(Sender: TObject);
     procedure actNewLendingExecute(Sender: TObject);
     procedure actLogoutExecute(Sender: TObject);
+    procedure actChangePasswordExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -71,6 +72,11 @@ procedure TMainForm.actCancelLendingExecute(Sender: TObject);
 begin
   Application.CreateForm(TCancelLendingForm, CancelLendingForm);
   CancelLendingForm.Show;
+end;
+
+procedure TMainForm.actChangePasswordExecute(Sender: TObject);
+begin
+  NewPwdForm.ShowModal;
 end;
 
 procedure TMainForm.actCustomerTableExecute(Sender: TObject);

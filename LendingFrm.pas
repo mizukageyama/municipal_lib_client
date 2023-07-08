@@ -125,16 +125,16 @@ end;
 
 procedure TLendingForm.TabSheet1Show(Sender: TObject);
 begin
-  LendingForm.Height := 609;
   LendingForm.Width := 980;
+  LendingForm.Height := 609;
   isNewData := True;
   TabSheet2.Caption := 'New Lending';
 end;
 
 procedure TLendingForm.TabSheet2Show(Sender: TObject);
 begin
-  LendingForm.Height := 505;
-  LendingForm.Width := 365;
+  LendingForm.Width := 370;
+  LendingForm.Height := 518;
   btnTerminateLending.Visible := not isNewData;
 
   if isNewData then
@@ -157,8 +157,8 @@ end;
 
 procedure TLendingForm.TabSheet3Show(Sender: TObject);
 begin
-  LendingForm.Height := 609;
   LendingForm.Width := 980;
+  LendingForm.Height := 609;
   isNewData := True;
   TabSheet2.Caption := 'New Lending';
   memRawResponse.Lines.Add(CurrentResponse);

@@ -53,8 +53,8 @@ object MainForm: TMainForm
     end
   end
   object aclLibrarySystem: TActionList
-    Left = 120
-    Top = 16
+    Left = 144
+    Top = 24
     object actNewLending: TAction
       Caption = '&New lending'
       OnExecute = actNewLendingExecute
@@ -85,6 +85,7 @@ object MainForm: TMainForm
     end
     object actChangePassword: TAction
       Caption = 'Change &Password'
+      OnExecute = actChangePasswordExecute
     end
   end
 end

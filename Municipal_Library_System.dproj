@@ -124,6 +124,22 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="APIRequestServiceU.pas"/>
+        <DCCReference Include="AuthorFrm.pas">
+            <Form>AuthorForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="BookFrm.pas">
+            <Form>BookForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UserFrm.pas">
+            <Form>UserForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="NewPasswordFrm.pas">
+            <Form>NewPwdForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
