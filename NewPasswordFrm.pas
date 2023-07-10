@@ -3,8 +3,10 @@ unit NewPasswordFrm;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, APIRequestServiceU, MVCFramework.RESTClient.Intf, MVCFramework.RESTClient;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.StdCtrls, APIRequestServiceU, MVCFramework.RESTClient.Intf,
+  MVCFramework.RESTClient;
 
 type
   TNewPwdForm = class(TForm)
@@ -44,7 +46,10 @@ begin
 
     APIEndpoint := '/api/users/me/password';
     if APIRequest.PUT(RESTClient, APIEndpoint, JSONBody) then
+    begin
+      edtNewPassword.Clear;
       Close;
+    end;
   finally
     RESTClient := nil;
   end;

@@ -2,8 +2,8 @@ object MainForm: TMainForm
   Left = 0
   Top = 0
   Caption = 'Municipal Library System'
-  ClientHeight = 378
-  ClientWidth = 844
+  ClientHeight = 177
+  ClientWidth = 504
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,7 +12,23 @@ object MainForm: TMainForm
   Font.Style = []
   Menu = mmLibrarySystem
   Position = poScreenCenter
+  OnClose = FormClose
   TextHeight = 15
+  object Label1: TLabel
+    Left = 72
+    Top = 74
+    Width = 360
+    Height = 28
+    Alignment = taCenter
+    Caption = 'Welcome to Municipal Library System'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
+    Layout = tlBottom
+  end
   object mmLibrarySystem: TMainMenu
     BiDiMode = bdLeftToRight
     ParentBiDiMode = False

@@ -18,25 +18,24 @@ type
     dsLending: TDataSource;
     fdmemLending: TFDMemTable;
     fdmemLendingid: TIntegerField;
-    pcLending: TPageControl;
+    pgcLending: TPageControl;
     TabSheet1: TTabSheet;
     pnlGrid: TPanel;
-    dbgUsers: TDBGrid;
+    dbgLendings: TDBGrid;
     pnlActions: TPanel;
     lblLendingStatus: TLabel;
     btnSearch: TButton;
-    dbnAuthor: TDBNavigator;
+    dbnLending: TDBNavigator;
     pnlNavigation: TPanel;
     lblPageInfo: TLabel;
     bbtnNextPage: TBitBtn;
     bbtnPrevPage: TBitBtn;
     TabSheet2: TTabSheet;
-    pnlAuthorInfo: TPanel;
+    pnlLendingInfo: TPanel;
     btnSave: TButton;
     TabSheet3: TTabSheet;
     pnlRawData: TPanel;
     memRawResponse: TMemo;
-    Label1: TLabel;
     dblcBook: TDBLookupComboBox;
     fdmemCustomerOpt: TFDMemTable;
     dsCustomerOpt: TDataSource;
@@ -74,9 +73,9 @@ type
     dbtForSelectedYear: TDBText;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure GetUsers(SearchKey: string = ''; PageParam: Integer = 1);
+    procedure GetLendings(SearchKey: string = ''; PageParam: Integer = 1);
     procedure btnSearchClick(Sender: TObject);
-    procedure dbnAuthorClick(Sender: TObject; Button: TNavigateBtn);
+    procedure dbnLendingClick(Sender: TObject; Button: TNavigateBtn);
     procedure GetCustomerOpt;
     procedure GetBookOpt;
     procedure bbtnNextPageClick(Sender: TObject);
@@ -87,7 +86,7 @@ type
     procedure btnSaveClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnTerminateLendingClick(Sender: TObject);
-    procedure dbgUsersDblClick(Sender: TObject);
+    procedure dbgLendingsDblClick(Sender: TObject);
   private
     RESTClient: IMVCRESTClient;
     CurrentResponse: string;
@@ -112,7 +111,7 @@ uses
 
 procedure TLendingForm.bbtnNextPageClick(Sender: TObject);
 begin
-  GetUsers(GetSearchKey, Pagination.fCurrentPage + 1);
+  GetLendings(GetSearchKey, Pagination.fCurrentPage + 1);
 end;
 
 function TLendingForm.GetSearchKey: string;
@@ -145,7 +144,8 @@ begin
       dblcBook.KeyValue	:= dblcBook.ListSource.DataSet.FieldByName('id').Value;
 
     if dblcCustomer.ListSource.DataSet.RecordCount >= 1 then
-      dblcCustomer.KeyValue	:= dblcCustomer.ListSource.DataSet.FieldByName('id').Value;
+      dblcCustomer.KeyValue	:= dblcCustomer.ListSource.DataSet
+        .FieldByName('id').Value;
   end
   else
   begin
@@ -169,7 +169,7 @@ end;
 
 procedure TLendingForm.bbtnPrevPageClick(Sender: TObject);
 begin
-  GetUsers(GetSearchKey, Pagination.fCurrentPage - 1);
+  GetLendings(GetSearchKey, Pagination.fCurrentPage - 1);
 end;
 
 procedure TLendingForm.btnSaveClick(Sender: TObject);
@@ -205,15 +205,15 @@ begin
     APIEndpoint := APIEndpoint + 'customers/' + CustomerId.ToString;
     if APIRequest.POST(RESTClient, APIEndpoint, JSONBody) then
     begin
-      GetUsers;
-      pcLending.ActivePageIndex := 0;
+      GetLendings;
+      pgcLending.ActivePageIndex := 0;
     end
   end
   else
   begin
     APIEndpoint := APIEndpoint + fdmemLendingId.AsString;
     if APIRequest.PUT(RESTClient, APIEndpoint, JSONBody) then
-      GetUsers;
+      GetLendings;
   end;
 end;
 
@@ -225,35 +225,37 @@ begin
     Exit;
   end;
 
-  GetUsers(GetSearchKey);
+  GetLendings(GetSearchKey);
 end;
 
 procedure TLendingForm.btnTerminateLendingClick(Sender: TObject);
 var
   APIEndpoint: string;
 begin
-  if MessageDlg('Are you sure you want to terminate this lending?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  if MessageDlg('Are you sure you want to terminate this lending?',
+    mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   begin
-    APIEndpoint := Format('/api/lendings/terminated/%d', [fdmemLendingId.Value]);
+    APIEndpoint := Format('/api/lendings/terminated/%d',
+      [fdmemLendingId.Value]);
     if APIRequest.PUT(RESTClient, APIEndpoint, nil) then
-      GetUsers;
+      GetLendings;
   end;
 end;
 
-procedure TLendingForm.dbgUsersDblClick(Sender: TObject);
+procedure TLendingForm.dbgLendingsDblClick(Sender: TObject);
 begin
   isNewData := False;
   TabSheet2.Caption := 'Information';
-  pcLending.ActivePageIndex := 1;
+  pgcLending.ActivePageIndex := 1;
 end;
 
-procedure TLendingForm.dbnAuthorClick(Sender: TObject; Button: TNavigateBtn);
+procedure TLendingForm.dbnLendingClick(Sender: TObject; Button: TNavigateBtn);
 var
   APIEndpoint: string;
 begin
   if Button = nbRefresh then
   begin
-    GetUsers;
+    GetLendings;
     cmbStatus.ItemIndex := -1;
   end
 end;
@@ -275,10 +277,10 @@ begin
   IsNewData := True;
   GetCustomerOpt;
   GetBookOpt;
-  GetUsers;
+  GetLendings;
 end;
 
-procedure TLendingForm.GetUsers(SearchKey: string = '';
+procedure TLendingForm.GetLendings(SearchKey: string = '';
   PageParam: Integer = 1);
 var
   Resp: IMVCRESTResponse;
@@ -290,7 +292,7 @@ begin
     RESTClient.AddQueryStringParam('status', SearchKey.ToLower);
 
   try
-    Resp := RESTClient.SetBearerAuthorization(GlobalTokenManager.GetToken)
+    Resp := RESTClient.SetBearerAuthorization(TokenManager.GetToken)
       .Get('/api/lendings');
 
     if Resp.StatusCode = 200 then
@@ -331,7 +333,7 @@ procedure TLendingForm.GetBookOpt;
 var
   Resp: IMVCRESTResponse;
 begin
-  Resp := RESTClient.SetBearerAuthorization(GlobalTokenManager.GetToken)
+  Resp := RESTClient.SetBearerAuthorization(TokenManager.GetToken)
     .Get('/api/books/all');
 
   if Resp.StatusCode = 200 then
@@ -348,7 +350,7 @@ procedure TLendingForm.GetCustomerOpt;
 var
   Resp: IMVCRESTResponse;
 begin
-  Resp := RESTClient.SetBearerAuthorization(GlobalTokenManager.GetToken)
+  Resp := RESTClient.SetBearerAuthorization(TokenManager.GetToken)
     .Get('/api/customers/all');
 
   if Resp.StatusCode = 200 then

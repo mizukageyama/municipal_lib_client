@@ -15,7 +15,7 @@ uses
 
 type
   TAuthorForm = class(TForm)
-    pcAuthor: TPageControl;
+    pgcAuthor: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
     pnlGrid: TPanel;
@@ -52,6 +52,7 @@ type
     fdmemAuthorBookyear: TIntegerField;
     edtID: TEdit;
     edtFullname: TEdit;
+    pnlSubGridTitle: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure GetAuthors(SearchKey: string = ''; PageParam: Integer = 1);
@@ -108,7 +109,6 @@ procedure TAuthorForm.TabSheet1Show(Sender: TObject);
 begin
   IsNewData := True;
   AuthorForm.Height := 609;
-  AuthorForm.Width := 586;
   TabSheet2.Caption := 'New Author';
 end;
 
@@ -118,7 +118,6 @@ begin
   if IsNewData then
   begin
     AuthorForm.Height := 297;
-    AuthorForm.Width := 378;
     edtID.Text := '*Auto Generated*';
     edtFullname.Clear;
     dtpBirthDate.Date := Now;
@@ -137,7 +136,6 @@ procedure TAuthorForm.TabSheet3Show(Sender: TObject);
 begin
   IsNewData := True;
   AuthorForm.Height := 609;
-  AuthorForm.Width := 586;
   TabSheet2.Caption := 'New Author';
   memRawResponse.Lines.Add(CurrentResponse);
   memRawResponse.SelStart := 0;
@@ -185,7 +183,7 @@ begin
     if APIRequest.POST(RESTClient, APIEndpoint, JSONBody) then
     begin
       GetAuthors;
-      pcAuthor.ActivePageIndex := 0;
+      pgcAuthor.ActivePageIndex := 0;
     end
   end
   else
@@ -214,7 +212,7 @@ begin
   IsNewData := False;
   TabSheet2.Caption := 'Information';
   pnlBooks.Visible := not IsNewData;
-  pcAuthor.TabIndex := 1;
+  pgcAuthor.TabIndex := 1;
 end;
 
 procedure TAuthorForm.dbnAuthorClick(Sender: TObject; Button: TNavigateBtn);
@@ -289,7 +287,7 @@ begin
     );
 
   try
-    RESTClient.SetBearerAuthorization(GlobalTokenManager.GetToken).Async(
+    RESTClient.SetBearerAuthorization(TokenManager.GetToken).Async(
       procedure (Resp: IMVCRESTResponse)
       begin
         fdmemAuthor.Close;
@@ -327,7 +325,7 @@ end;
 procedure TAuthorForm.GetBooksByAuthorId(AuthorId: integer);
 begin
   try
-    RESTClient.SetBearerAuthorization(GlobalTokenManager.GetToken).Async(
+    RESTClient.SetBearerAuthorization(TokenManager.GetToken).Async(
       procedure (Resp: IMVCRESTResponse)
       begin
         fdmemAuthorBook.Close;

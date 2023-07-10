@@ -17,15 +17,7 @@ object BookForm: TBookForm
   OnCreate = FormCreate
   OnShow = FormShow
   TextHeight = 15
-  object Label1: TLabel
-    Left = 69
-    Top = 127
-    Width = 32
-    Height = 15
-    Alignment = taRightJustify
-    Caption = 'Email:'
-  end
-  object pcBook: TPageControl
+  object pgcBook: TPageControl
     AlignWithMargins = True
     Left = 0
     Top = 3
@@ -37,7 +29,7 @@ object BookForm: TBookForm
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 955
+    ExplicitWidth = 939
     ExplicitHeight = 559
     object TabSheet1: TTabSheet
       Caption = 'Book Table'
@@ -50,8 +42,7 @@ object BookForm: TBookForm
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 953
-        object dbgUsers: TDBGrid
+        object dbgBooks: TDBGrid
           AlignWithMargins = True
           Left = 6
           Top = 77
@@ -76,7 +67,7 @@ object BookForm: TBookForm
           TitleFont.Height = -12
           TitleFont.Name = 'Segoe UI'
           TitleFont.Style = []
-          OnDblClick = dbgUsersDblClick
+          OnDblClick = dbgBooksDblClick
           Columns = <
             item
               Expanded = False
@@ -110,7 +101,6 @@ object BookForm: TBookForm
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitWidth = 953
           object lblBookTitle: TLabel
             Left = 9
             Top = 13
@@ -140,7 +130,7 @@ object BookForm: TBookForm
             TabOrder = 0
             OnClick = btnSearchClick
           end
-          object edtEmail: TEdit
+          object edtBookTitle: TEdit
             Left = 9
             Top = 39
             Width = 177
@@ -153,7 +143,7 @@ object BookForm: TBookForm
             ParentFont = False
             TabOrder = 1
           end
-          object dbnAuthor: TDBNavigator
+          object dbnBook: TDBNavigator
             Left = 319
             Top = 39
             Width = 74
@@ -161,7 +151,7 @@ object BookForm: TBookForm
             DataSource = dsBook
             VisibleButtons = [nbDelete, nbRefresh]
             TabOrder = 2
-            OnClick = dbnAuthorClick
+            OnClick = dbnBookClick
           end
         end
         object pnlNavigation: TPanel
@@ -177,7 +167,6 @@ object BookForm: TBookForm
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 2
-          ExplicitWidth = 953
           object lblPageInfo: TLabel
             Left = 120
             Top = 0
@@ -258,7 +247,6 @@ object BookForm: TBookForm
             Layout = blGlyphRight
             TabOrder = 0
             OnClick = bbtnNextPageClick
-            ExplicitLeft = 830
           end
           object bbtnPrevPage: TBitBtn
             AlignWithMargins = True
@@ -335,7 +323,7 @@ object BookForm: TBookForm
       Caption = 'New Book'
       ImageIndex = 1
       OnShow = TabSheet2Show
-      object pnlAuthorInfo: TPanel
+      object pnlBookInfo: TPanel
         Left = 0
         Top = 0
         Width = 435
@@ -346,7 +334,8 @@ object BookForm: TBookForm
         ParentBackground = False
         ParentCtl3D = False
         TabOrder = 0
-        ExplicitWidth = 441
+        ExplicitWidth = 429
+        ExplicitHeight = 529
         object lblID: TLabel
           Left = 134
           Top = 39
@@ -440,7 +429,7 @@ object BookForm: TBookForm
           TabOrder = 4
         end
       end
-      object pblBookHistory: TPanel
+      object pnlBookLendingHistory: TPanel
         Left = 435
         Top = 0
         Width = 502
@@ -451,11 +440,13 @@ object BookForm: TBookForm
         Margins.Bottom = 4
         Align = alRight
         TabOrder = 1
+        ExplicitLeft = 429
+        ExplicitHeight = 529
         object dbgLendingHistory: TDBGrid
           Left = 1
-          Top = 1
+          Top = 34
           Width = 500
-          Height = 536
+          Height = 503
           Margins.Left = 4
           Margins.Top = 4
           Margins.Right = 4
@@ -493,6 +484,30 @@ object BookForm: TBookForm
               Visible = True
             end>
         end
+        object pnlSubGridTitle: TPanel
+          Left = 1
+          Top = 1
+          Width = 500
+          Height = 33
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
+          Align = alTop
+          Alignment = taLeftJustify
+          BevelOuter = bvNone
+          Caption = ' Book'#39's Lending History'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentBackground = False
+          ParentFont = False
+          TabOrder = 1
+          ExplicitLeft = 2
+          ExplicitTop = 9
+        end
       end
     end
     object TabSheet3: TTabSheet
@@ -514,7 +529,6 @@ object BookForm: TBookForm
         Margins.Bottom = 4
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 953
         object memRawResponse: TMemo
           Left = 1
           Top = 1
@@ -529,7 +543,6 @@ object BookForm: TBookForm
             '')
           ScrollBars = ssVertical
           TabOrder = 0
-          ExplicitWidth = 951
         end
       end
     end

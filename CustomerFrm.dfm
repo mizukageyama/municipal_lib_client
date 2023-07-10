@@ -2,7 +2,7 @@ object CustomerForm: TCustomerForm
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
-  Caption = 'Customers'
+  Caption = ' Customers'
   ClientHeight = 571
   ClientWidth = 918
   Color = clBtnFace
@@ -17,7 +17,7 @@ object CustomerForm: TCustomerForm
   OnCreate = FormCreate
   OnShow = FormShow
   TextHeight = 15
-  object pcCustomer: TPageControl
+  object pgcCustomer: TPageControl
     AlignWithMargins = True
     Left = 0
     Top = 3
@@ -42,7 +42,8 @@ object CustomerForm: TCustomerForm
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitHeight = 423
+        ExplicitWidth = 904
+        ExplicitHeight = 529
         object dbgCustomers: TDBGrid
           AlignWithMargins = True
           Left = 6
@@ -106,6 +107,7 @@ object CustomerForm: TCustomerForm
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
+          ExplicitWidth = 904
           object lblName: TLabel
             Left = 9
             Top = 13
@@ -172,7 +174,8 @@ object CustomerForm: TCustomerForm
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 2
-          ExplicitTop = 381
+          ExplicitTop = 487
+          ExplicitWidth = 904
           object lblPageInfo: TLabel
             Left = 120
             Top = 0
@@ -253,6 +256,7 @@ object CustomerForm: TCustomerForm
             Layout = blGlyphRight
             TabOrder = 0
             OnClick = bbtnNextPageClick
+            ExplicitLeft = 781
           end
           object bbtnPrevPage: TBitBtn
             AlignWithMargins = True
@@ -334,12 +338,11 @@ object CustomerForm: TCustomerForm
         Top = 0
         Width = 416
         Height = 538
+        Margins.Right = 0
         Align = alClient
         BevelOuter = bvNone
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 410
-        ExplicitHeight = 529
         object lblID: TLabel
           Left = 113
           Top = 47
@@ -454,20 +457,20 @@ object CustomerForm: TCustomerForm
         Margins.Right = 4
         Margins.Bottom = 4
         Align = alRight
+        BevelOuter = bvNone
         TabOrder = 1
-        ExplicitLeft = 410
-        ExplicitHeight = 529
-        object DBGrid1: TDBGrid
-          Left = 1
-          Top = 1
-          Width = 492
-          Height = 536
+        object dbgCustomerLendings: TDBGrid
+          Left = 0
+          Top = 33
+          Width = 494
+          Height = 505
           Margins.Left = 4
           Margins.Top = 4
           Margins.Right = 4
           Margins.Bottom = 4
           Align = alClient
           DataSource = dsCustomerLending
+          ReadOnly = True
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -478,7 +481,7 @@ object CustomerForm: TCustomerForm
             item
               Expanded = False
               FieldName = 'id'
-              Width = 58
+              Width = 47
               Visible = True
             end
             item
@@ -499,6 +502,28 @@ object CustomerForm: TCustomerForm
               Width = 132
               Visible = True
             end>
+        end
+        object pnlSubGridTitle: TPanel
+          Left = 0
+          Top = 0
+          Width = 494
+          Height = 33
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
+          Align = alTop
+          Alignment = taLeftJustify
+          BevelOuter = bvNone
+          Caption = 'Customer'#39's Lending History'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentBackground = False
+          ParentFont = False
+          TabOrder = 1
         end
       end
     end
@@ -521,7 +546,6 @@ object CustomerForm: TCustomerForm
         Margins.Bottom = 4
         Align = alClient
         TabOrder = 0
-        ExplicitHeight = 423
         object memRawResponse: TMemo
           Left = 1
           Top = 1
@@ -536,7 +560,6 @@ object CustomerForm: TCustomerForm
             '')
           ScrollBars = ssVertical
           TabOrder = 0
-          ExplicitHeight = 421
         end
       end
     end

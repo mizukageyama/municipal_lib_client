@@ -27,10 +27,13 @@ var
 begin
   JSONValue := TJSONObject.ParseJSONValue(Resp);
 
-  PaginationData.fHasNextPage := not JSONValue.GetValue<string>('meta.next_page_uri', '').IsEmpty;
-  PaginationData.fHasPrevPage := not JSONValue.GetValue<string>('meta.prev_page_uri', '').IsEmpty;
-  PaginationData.fCurrentPage := JSONValue.GetValue<Integer>('meta.curr_page', 0);
-  PaginationData.fTotalPages := JSONValue.GetValue<Integer>('meta.total_page', 0);
+  PaginationData.fHasNextPage := not
+    JSONValue.GetValue<string>('meta.next_page_uri', '').IsEmpty;
+  PaginationData.fHasPrevPage := not
+    JSONValue.GetValue<string>('meta.prev_page_uri', '').IsEmpty;
+  PaginationData.fCurrentPage :=
+    JSONValue.GetValue<Integer>('meta.curr_page', 0);
+  PaginationData.fTotalPages :=
+    JSONValue.GetValue<Integer>('meta.total_page', 0);
 end;
-
 end.

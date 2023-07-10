@@ -19,7 +19,7 @@ type
     fdmemCustomer: TFDMemTable;
     fdmemCustomerId: TIntegerField;
     fdmemCustomerFirstName: TStringField;
-    pcCustomer: TPageControl;
+    pgcCustomer: TPageControl;
     TabSheet1: TTabSheet;
     pnlGrid: TPanel;
     dbgCustomers: TDBGrid;
@@ -52,16 +52,17 @@ type
     memNote: TMemo;
     lblNote: TLabel;
     pnlLendings: TPanel;
-    DBGrid1: TDBGrid;
+    dbgCustomerLendings: TDBGrid;
     fdmemCustomerLending: TFDMemTable;
     dsCustomerLending: TDataSource;
     fdmemCustomerLendingId: TIntegerField;
     fdmemCustomerLendingBookTitle: TStringField;
     fdmemCustomerLendingStart: TDateTimeField;
     fdmemCustomerLendingEnd: TDateTimeField;
+    pnlSubGridTitle: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure GetUsers(SearchKey: string = ''; PageParam: Integer = 1);
+    procedure GetCustomers(SearchKey: string = ''; PageParam: Integer = 1);
     procedure btnSearchClick(Sender: TObject);
     procedure GetCustomerLendingHistory(CustomerID: Integer);
     procedure dbnCustomerClick(Sender: TObject; Button: TNavigateBtn);
@@ -98,7 +99,7 @@ uses
 
 procedure TCustomerForm.bbtnNextPageClick(Sender: TObject);
 begin
-  GetUsers(GetSearchKey, Pagination.fCurrentPage + 1);
+  GetCustomers(GetSearchKey, Pagination.fCurrentPage + 1);
 end;
 
 function TCustomerForm.GetSearchKey: string;
@@ -155,7 +156,7 @@ end;
 
 procedure TCustomerForm.bbtnPrevPageClick(Sender: TObject);
 begin
-  GetUsers(GetSearchKey, Pagination.fCurrentPage - 1);
+  GetCustomers(GetSearchKey, Pagination.fCurrentPage - 1);
 end;
 
 procedure TCustomerForm.btnSaveClick(Sender: TObject);
@@ -172,7 +173,9 @@ begin
   CustomerDOB := dtpDOB.Date;
   CustomerNote := memNote.Text;
 
-  if CustomerFirstName.IsEmpty or CustomerLastName.IsEmpty or (CustomerDOB = Now) then
+  if CustomerFirstName.IsEmpty or
+    CustomerLastName.IsEmpty or
+    (CustomerDOB = Now) then
   begin
     ShowMessage('Please fill all the fields');
     Exit;
@@ -190,15 +193,15 @@ begin
   begin
     if APIRequest.POST(RESTClient, APIEndpoint, JSONBody) then
     begin
-      GetUsers;
-      pcCustomer.ActivePageIndex := 0;
+      GetCustomers;
+      pgcCustomer.ActivePageIndex := 0;
     end
   end
   else
   begin
     APIEndpoint := APIEndpoint + '/' + fdmemCustomerId.AsString;
     if APIRequest.PUT(RESTClient, APIEndpoint, JSONBody) then
-      GetUsers;
+      GetCustomers;
   end;
 end;
 
@@ -210,21 +213,22 @@ begin
     Exit;
   end;
 
-  GetUsers(GetSearchKey);
+  GetCustomers(GetSearchKey);
 end;
 
 procedure TCustomerForm.dbgCustomersDblClick(Sender: TObject);
 begin
   isNewData := False;
   TabSheet2.Caption := 'Information';
-  pcCustomer.ActivePageIndex := 1;
+  pgcCustomer.ActivePageIndex := 1;
 end;
 
-procedure TCustomerForm.dbnCustomerClick(Sender: TObject; Button: TNavigateBtn);
+procedure TCustomerForm.dbnCustomerClick(Sender: TObject;
+  Button: TNavigateBtn);
 begin
   if Button = nbRefresh then
   begin
-    GetUsers;
+    GetCustomers;
     edtName.Clear;
   end;
 end;
@@ -233,10 +237,11 @@ procedure TCustomerForm.fdmemCustomerBeforeDelete(DataSet: TDataSet);
 var
   Response: IMVCRESTResponse;
 begin
-  Response := RESTClient.DataSetDelete('/api/customers', fdmemCustomerid.AsString);
+  Response := RESTClient.DataSetDelete('/api/customers',
+    fdmemCustomerid.AsString);
   if not Response.StatusCode in [200] then
     raise Exception.Create(Response.Content);
-  GetUsers;
+  GetCustomers;
 end;
 
 procedure TCustomerForm.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -253,10 +258,10 @@ end;
 
 procedure TCustomerForm.FormShow(Sender: TObject);
 begin
-  GetUsers;
+  GetCustomers;
 end;
 
-procedure TCustomerForm.GetUsers(SearchKey: string = '';
+procedure TCustomerForm.GetCustomers(SearchKey: string = '';
   PageParam: Integer = 1);
 begin
   RESTClient.AddQueryStringParam('page', PageParam);
@@ -268,7 +273,7 @@ begin
       [SearchKey, SearchKey]));
 
   try
-    RESTClient.SetBearerAuthorization(GlobalTokenManager.GetToken).Async(
+    RESTClient.SetBearerAuthorization(TokenManager.GetToken).Async(
       procedure (Resp: IMVCRESTResponse)
       begin
         fdmemCustomer.Close;
@@ -307,7 +312,7 @@ procedure TCustomerForm.GetCustomerLendingHistory(CustomerID: Integer);
 var
   Resp: IMVCRESTResponse;
 begin
-  Resp := RESTClient.SetBearerAuthorization(GlobalTokenManager.GetToken)
+  Resp := RESTClient.SetBearerAuthorization(TokenManager.GetToken)
     .Get('/api/lendings/customers/' + CustomerID.ToString);
 
   if Resp.StatusCode = 200 then

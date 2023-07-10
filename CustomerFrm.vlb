@@ -7,9 +7,6 @@ Coordinates=10,10,109,124
 [pnlActions]
 Coordinates=512,10,74,58
 
-[pcCustomer]
-Coordinates=10,348,84,36
-
 [lblPageInfo]
 Coordinates=116,280,79,58
 
@@ -88,4 +85,7 @@ Coordinates=629,221,119,36
 
 [pnlCustomerInfo]
 Coordinates=498,144,91,58
+
+[pgcCustomer]
+Coordinates=10,348,84,36
 

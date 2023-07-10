@@ -17,7 +17,7 @@ object AuthorForm: TAuthorForm
   OnCreate = FormCreate
   OnShow = FormShow
   TextHeight = 15
-  object pcAuthor: TPageControl
+  object pgcAuthor: TPageControl
     AlignWithMargins = True
     Left = 0
     Top = 3
@@ -42,6 +42,8 @@ object AuthorForm: TAuthorForm
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 560
+        ExplicitHeight = 529
         object dbgAuthors: TDBGrid
           AlignWithMargins = True
           Left = 6
@@ -111,6 +113,7 @@ object AuthorForm: TAuthorForm
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
+          ExplicitWidth = 560
           object lblAuthorName: TLabel
             Left = 9
             Top = 13
@@ -177,6 +180,8 @@ object AuthorForm: TAuthorForm
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 2
+          ExplicitTop = 487
+          ExplicitWidth = 560
           object lblPageInfo: TLabel
             Left = 120
             Top = 0
@@ -257,6 +262,7 @@ object AuthorForm: TAuthorForm
             Layout = blGlyphRight
             TabOrder = 0
             OnClick = bbtnNextPageClick
+            ExplicitLeft = 437
           end
           object bbtnPrevPage: TBitBtn
             AlignWithMargins = True
@@ -342,9 +348,8 @@ object AuthorForm: TAuthorForm
         BevelOuter = bvNone
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 560
         object lblID: TLabel
-          Left = 83
+          Left = 187
           Top = 40
           Width = 14
           Height = 15
@@ -352,7 +357,7 @@ object AuthorForm: TAuthorForm
           Caption = 'ID:'
         end
         object lblFullname: TLabel
-          Left = 43
+          Left = 147
           Top = 81
           Width = 57
           Height = 15
@@ -360,7 +365,7 @@ object AuthorForm: TAuthorForm
           Caption = 'Full Name:'
         end
         object lblBirthDate: TLabel
-          Left = 45
+          Left = 149
           Top = 120
           Width = 55
           Height = 15
@@ -368,7 +373,7 @@ object AuthorForm: TAuthorForm
           Caption = 'Birth Date:'
         end
         object dtpBirthDate: TDateTimePicker
-          Left = 106
+          Left = 210
           Top = 116
           Width = 113
           Height = 23
@@ -377,16 +382,16 @@ object AuthorForm: TAuthorForm
           TabOrder = 0
         end
         object btnSave: TButton
-          Left = 208
+          Left = 210
           Top = 163
-          Width = 107
+          Width = 113
           Height = 25
           Caption = 'Save'
           TabOrder = 1
           OnClick = btnSaveClick
         end
         object edtID: TEdit
-          Left = 106
+          Left = 210
           Top = 37
           Width = 113
           Height = 23
@@ -398,7 +403,7 @@ object AuthorForm: TAuthorForm
           TabOrder = 2
         end
         object edtFullname: TEdit
-          Left = 107
+          Left = 211
           Top = 78
           Width = 208
           Height = 23
@@ -419,13 +424,11 @@ object AuthorForm: TAuthorForm
         ParentBackground = False
         TabOrder = 1
         Visible = False
-        ExplicitWidth = 560
-        ExplicitHeight = 304
         object dbgAuthorBooks: TDBGrid
           Left = 0
-          Top = 0
+          Top = 33
           Width = 566
-          Height = 313
+          Height = 280
           Align = alClient
           DataSource = dsAuthorBook
           ReadOnly = True
@@ -454,6 +457,29 @@ object AuthorForm: TAuthorForm
               Width = 190
               Visible = True
             end>
+        end
+        object pnlSubGridTitle: TPanel
+          Left = 0
+          Top = 0
+          Width = 566
+          Height = 33
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
+          Align = alTop
+          Alignment = taLeftJustify
+          BevelOuter = bvNone
+          Caption = 'Author'#39's Books'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentBackground = False
+          ParentFont = False
+          TabOrder = 1
+          ExplicitTop = 8
         end
       end
     end

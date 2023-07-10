@@ -23,9 +23,8 @@ object LoginForm: TLoginForm
     BevelOuter = bvNone
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 296
-    ExplicitWidth = 280
-    ExplicitHeight = 368
+    ExplicitWidth = 329
+    ExplicitHeight = 349
     object lblUsername: TLabel
       Left = 51
       Top = 75
@@ -107,7 +106,7 @@ object LoginForm: TLoginForm
     Color = clWhite
     ParentBackground = False
     TabOrder = 1
-    ExplicitHeight = 368
+    ExplicitHeight = 349
     object imgLogo: TImage
       Left = 32
       Top = 95

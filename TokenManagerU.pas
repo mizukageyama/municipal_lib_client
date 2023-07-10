@@ -12,13 +12,12 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-
     procedure SaveToken(const Token: string);
     function GetToken: string;
   end;
 
 var
-  GlobalTokenManager: TTokenManager;
+  TokenManager: TTokenManager;
 
 implementation
 
@@ -44,10 +43,10 @@ begin
 end;
 
 initialization
-  GlobalTokenManager := TTokenManager.Create;
+  TokenManager := TTokenManager.Create;
 
 finalization
-  GlobalTokenManager.Free;
+  TokenManager.Free;
 
 end.
 

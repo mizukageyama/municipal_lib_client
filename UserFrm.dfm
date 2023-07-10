@@ -17,7 +17,7 @@ object UserForm: TUserForm
   OnCreate = FormCreate
   OnShow = FormShow
   TextHeight = 15
-  object pcUser: TPageControl
+  object pgcUser: TPageControl
     AlignWithMargins = True
     Left = 0
     Top = 3
@@ -126,7 +126,7 @@ object UserForm: TUserForm
             TabOrder = 0
             OnClick = btnSearchClick
           end
-          object edtEmail: TEdit
+          object edtEmailKey: TEdit
             Left = 9
             Top = 39
             Width = 177
@@ -139,7 +139,7 @@ object UserForm: TUserForm
             ParentFont = False
             TabOrder = 1
           end
-          object dbnAuthor: TDBNavigator
+          object dbnUser: TDBNavigator
             Left = 319
             Top = 38
             Width = 74
@@ -147,7 +147,7 @@ object UserForm: TUserForm
             DataSource = dsUser
             VisibleButtons = [nbDelete, nbRefresh]
             TabOrder = 2
-            OnClick = dbnAuthorClick
+            OnClick = dbnUserClick
           end
         end
         object pnlNavigation: TPanel
@@ -322,7 +322,7 @@ object UserForm: TUserForm
       Caption = 'New User'
       ImageIndex = 1
       OnShow = TabSheet2Show
-      object pnlAuthorInfo: TPanel
+      object pnlUserInfo: TPanel
         Left = 0
         Top = 0
         Width = 651
@@ -331,7 +331,6 @@ object UserForm: TUserForm
         BevelOuter = bvNone
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 627
         object lblID: TLabel
           Left = 114
           Top = 41
@@ -377,7 +376,7 @@ object UserForm: TUserForm
           ReadOnly = True
           TabOrder = 1
         end
-        object edtFullname: TEdit
+        object edtEmail: TEdit
           Left = 138
           Top = 79
           Width = 208

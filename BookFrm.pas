@@ -19,21 +19,21 @@ type
     fdmemBook: TFDMemTable;
     fdmemBookId: TIntegerField;
     fdmemBookAuthor: TStringField;
-    pcBook: TPageControl;
+    pgcBook: TPageControl;
     TabSheet1: TTabSheet;
     pnlGrid: TPanel;
-    dbgUsers: TDBGrid;
+    dbgBooks: TDBGrid;
     pnlActions: TPanel;
     lblBookTitle: TLabel;
     btnSearch: TButton;
-    edtEmail: TEdit;
-    dbnAuthor: TDBNavigator;
+    edtBookTitle: TEdit;
+    dbnBook: TDBNavigator;
     pnlNavigation: TPanel;
     lblPageInfo: TLabel;
     bbtnNextPage: TBitBtn;
     bbtnPrevPage: TBitBtn;
     TabSheet2: TTabSheet;
-    pnlAuthorInfo: TPanel;
+    pnlBookInfo: TPanel;
     lblID: TLabel;
     lblYear: TLabel;
     btnSave: TButton;
@@ -42,7 +42,6 @@ type
     pnlRawData: TPanel;
     memRawResponse: TMemo;
     lblAuthor: TLabel;
-    Label1: TLabel;
     lblTitle: TLabel;
     fdmemBookTitle: TStringField;
     fdmemBookAuthorId: TIntegerField;
@@ -54,7 +53,7 @@ type
     dsAuthorOpt: TDataSource;
     fdmemAuthorOptid: TIntegerField;
     fdmemAuthorOptfull_name: TStringField;
-    pblBookHistory: TPanel;
+    pnlBookLendingHistory: TPanel;
     dbgLendingHistory: TDBGrid;
     fdmemLendingHistory: TFDMemTable;
     dsLendingHistory: TDataSource;
@@ -62,12 +61,13 @@ type
     fdmemLendingHistoryLendingID: TIntegerField;
     fdmemLendingHistoryLendingStart: TDateTimeField;
     fdmemLendingHistoryLendingEnd: TDateTimeField;
+    pnlSubGridTitle: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure GetUsers(SearchKey: string = ''; PageParam: Integer = 1);
+    procedure GetBooks(SearchKey: string = ''; PageParam: Integer = 1);
     procedure GetBookLendingHistory(BookID: Integer);
     procedure btnSearchClick(Sender: TObject);
-    procedure dbnAuthorClick(Sender: TObject; Button: TNavigateBtn);
+    procedure dbnBookClick(Sender: TObject; Button: TNavigateBtn);
     procedure GetAuthorOpt;
     procedure fdmemBookBeforeDelete(DataSet: TDataSet);
     procedure bbtnNextPageClick(Sender: TObject);
@@ -77,7 +77,7 @@ type
     procedure TabSheet3Show(Sender: TObject);
     procedure btnSaveClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure dbgUsersDblClick(Sender: TObject);
+    procedure dbgBooksDblClick(Sender: TObject);
   private
     RESTClient: IMVCRESTClient;
     CurrentResponse: string;
@@ -102,14 +102,14 @@ uses
 
 procedure TBookForm.bbtnNextPageClick(Sender: TObject);
 begin
-  GetUsers(GetSearchKey, Pagination.fCurrentPage + 1);
+  GetBooks(GetSearchKey, Pagination.fCurrentPage + 1);
 end;
 
 function TBookForm.GetSearchKey: string;
 var
   SearchKey: string;
 begin
-  SearchKey := edtEmail.Text;
+  SearchKey := edtBookTitle.Text;
   Result := SearchKey;
 end;
 
@@ -123,7 +123,7 @@ end;
 
 procedure TBookForm.TabSheet2Show(Sender: TObject);
 begin
-    pblBookHistory.Visible := not IsNewData;
+    pnlBookLendingHistory.Visible := not IsNewData;
 
     if IsNewData then
     begin
@@ -159,7 +159,7 @@ end;
 
 procedure TBookForm.bbtnPrevPageClick(Sender: TObject);
 begin
-  GetUsers(GetSearchKey, Pagination.fCurrentPage - 1);
+  GetBooks(GetSearchKey, Pagination.fCurrentPage - 1);
 end;
 
 procedure TBookForm.btnSaveClick(Sender: TObject);
@@ -193,18 +193,16 @@ begin
   begin
     if APIRequest.POST(RESTClient, APIEndpoint, JSONBody) then
     begin
-      GetUsers;
-      pcBook.ActivePageIndex := 0;
+      GetBooks;
+      pgcBook.ActivePageIndex := 0;
     end
   end
   else
   begin
     APIEndpoint := APIEndpoint + '/' + edtId.Text;
     if APIRequest.PUT(RESTClient, APIEndpoint, JSONBody) then
-      GetUsers;
+      GetBooks;
   end;
-
-
 end;
 
 procedure TBookForm.btnSearchClick(Sender: TObject);
@@ -215,22 +213,22 @@ begin
     Exit;
   end;
 
-  GetUsers(GetSearchKey);
+  GetBooks(GetSearchKey);
 end;
 
-procedure TBookForm.dbgUsersDblClick(Sender: TObject);
+procedure TBookForm.dbgBooksDblClick(Sender: TObject);
 begin
   isNewData := False;
   TabSheet2.Caption := 'Information';
-  pcBook.ActivePageIndex := 1;
+  pgcBook.ActivePageIndex := 1;
 end;
 
-procedure TBookForm.dbnAuthorClick(Sender: TObject; Button: TNavigateBtn);
+procedure TBookForm.dbnBookClick(Sender: TObject; Button: TNavigateBtn);
 begin
   if Button = nbRefresh then
   begin
-    GetUsers;
-    edtEmail.Clear;
+    GetBooks;
+    edtBookTitle.Clear;
   end;
 end;
 
@@ -241,7 +239,7 @@ begin
   Response := RESTClient.DataSetDelete('/api/users', fdmemBookId.AsString);
   if not Response.StatusCode in [200] then
     raise Exception.Create(Response.Content);
-  GetUSers;
+  GetBooks;
 end;
 
 procedure TBookForm.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -258,11 +256,11 @@ end;
 
 procedure TBookForm.FormShow(Sender: TObject);
 begin
-  GetUsers;
+  GetBooks;
   GetAuthorOpt;
 end;
 
-procedure TBookForm.GetUsers(SearchKey: string = '';
+procedure TBookForm.GetBooks(SearchKey: string = '';
   PageParam: Integer = 1);
 var
   Resp: IMVCRESTResponse;
@@ -275,7 +273,7 @@ begin
       [SearchKey]));
 
   try
-    Resp := RESTClient.SetBearerAuthorization(GlobalTokenManager.GetToken)
+    Resp := RESTClient.SetBearerAuthorization(TokenManager.GetToken)
        .Get('/api/books');
     if Resp.StatusCode = 200 then
     begin
@@ -315,7 +313,7 @@ procedure TBookForm.GetAuthorOpt;
 var
   Resp: IMVCRESTResponse;
 begin
-  Resp := RESTClient.SetBearerAuthorization(GlobalTokenManager.GetToken)
+  Resp := RESTClient.SetBearerAuthorization(TokenManager.GetToken)
     .Get('/api/authors/all');
 
   if Resp.StatusCode = 200 then
@@ -333,7 +331,7 @@ procedure TBookForm.GetBookLendingHistory(BookID: Integer);
 var
   Resp: IMVCRESTResponse;
 begin
-  Resp := RESTClient.SetBearerAuthorization(GlobalTokenManager.GetToken)
+  Resp := RESTClient.SetBearerAuthorization(TokenManager.GetToken)
     .Get('/api/lendings/books/' + BookID.ToString);
 
   if Resp.StatusCode = 200 then

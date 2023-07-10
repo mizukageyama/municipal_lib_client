@@ -3,9 +3,10 @@ unit MainFrm;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, System.Actions, Vcl.ActnList,
-  TokenManagerU, NewPasswordFrm;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.Menus, System.Actions, Vcl.ActnList, TokenManagerU, NewPasswordFrm,
+  Vcl.StdCtrls;
 
 type
   TMainForm = class(TForm)
@@ -30,6 +31,7 @@ type
     Change1: TMenuItem;
     Logout2: TMenuItem;
     N1: TMenuItem;
+    Label1: TLabel;
     procedure actCancelLendingExecute(Sender: TObject);
     procedure actAuthorTableExecute(Sender: TObject);
     procedure actBookTableExecute(Sender: TObject);
@@ -39,6 +41,7 @@ type
     procedure actNewLendingExecute(Sender: TObject);
     procedure actLogoutExecute(Sender: TObject);
     procedure actChangePasswordExecute(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -93,7 +96,7 @@ end;
 
 procedure TMainForm.actLogoutExecute(Sender: TObject);
 begin
-  Close;
+  Close; { Close main form, then show login form }
   LoginForm.Show;
 end;
 
@@ -107,6 +110,11 @@ procedure TMainForm.actUserTableExecute(Sender: TObject);
 begin
   Application.CreateForm(TUserForm, UserForm);
   UserForm.Show;
+end;
+
+procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  LoginForm.Close; { End Application }
 end;
 
 end.

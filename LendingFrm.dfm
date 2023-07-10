@@ -17,15 +17,7 @@ object LendingForm: TLendingForm
   OnCreate = FormCreate
   OnShow = FormShow
   TextHeight = 15
-  object Label1: TLabel
-    Left = 69
-    Top = 127
-    Width = 32
-    Height = 15
-    Alignment = taRightJustify
-    Caption = 'Email:'
-  end
-  object pcLending: TPageControl
+  object pgcLending: TPageControl
     AlignWithMargins = True
     Left = 0
     Top = 3
@@ -50,9 +42,7 @@ object LendingForm: TLendingForm
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 954
-        ExplicitHeight = 529
-        object dbgUsers: TDBGrid
+        object dbgLendings: TDBGrid
           AlignWithMargins = True
           Left = 6
           Top = 77
@@ -77,7 +67,7 @@ object LendingForm: TLendingForm
           TitleFont.Height = -12
           TitleFont.Name = 'Segoe UI'
           TitleFont.Style = []
-          OnDblClick = dbgUsersDblClick
+          OnDblClick = dbgLendingsDblClick
           Columns = <
             item
               Expanded = False
@@ -118,7 +108,6 @@ object LendingForm: TLendingForm
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitWidth = 954
           object lblLendingStatus: TLabel
             Left = 9
             Top = 13
@@ -148,7 +137,7 @@ object LendingForm: TLendingForm
             TabOrder = 0
             OnClick = btnSearchClick
           end
-          object dbnAuthor: TDBNavigator
+          object dbnLending: TDBNavigator
             Left = 271
             Top = 39
             Width = 58
@@ -156,7 +145,7 @@ object LendingForm: TLendingForm
             DataSource = dsLending
             VisibleButtons = [nbRefresh]
             TabOrder = 1
-            OnClick = dbnAuthorClick
+            OnClick = dbnLendingClick
           end
           object cmbStatus: TComboBox
             Left = 9
@@ -193,8 +182,6 @@ object LendingForm: TLendingForm
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 2
-          ExplicitTop = 487
-          ExplicitWidth = 954
           object lblPageInfo: TLabel
             Left = 120
             Top = 0
@@ -275,7 +262,6 @@ object LendingForm: TLendingForm
             Layout = blGlyphRight
             TabOrder = 0
             OnClick = bbtnNextPageClick
-            ExplicitLeft = 831
           end
           object bbtnPrevPage: TBitBtn
             AlignWithMargins = True
@@ -352,7 +338,7 @@ object LendingForm: TLendingForm
       Caption = 'New Lending'
       ImageIndex = 1
       OnShow = TabSheet2Show
-      object pnlAuthorInfo: TPanel
+      object pnlLendingInfo: TPanel
         Left = 0
         Top = 0
         Width = 960
@@ -363,6 +349,8 @@ object LendingForm: TLendingForm
         ParentBackground = False
         ParentCtl3D = False
         TabOrder = 0
+        ExplicitWidth = 954
+        ExplicitHeight = 529
         object lblID: TLabel
           Left = 27
           Top = 33

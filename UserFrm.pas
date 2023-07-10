@@ -19,26 +19,26 @@ type
     fdmemUser: TFDMemTable;
     fdmemUserid: TIntegerField;
     fdmemUserEmail: TStringField;
-    pcUser: TPageControl;
+    pgcUser: TPageControl;
     TabSheet1: TTabSheet;
     pnlGrid: TPanel;
     dbgUsers: TDBGrid;
     pnlActions: TPanel;
     lblUserEmail: TLabel;
     btnSearch: TButton;
-    edtEmail: TEdit;
-    dbnAuthor: TDBNavigator;
+    edtEmailKey: TEdit;
+    dbnUser: TDBNavigator;
     pnlNavigation: TPanel;
     lblPageInfo: TLabel;
     bbtnNextPage: TBitBtn;
     bbtnPrevPage: TBitBtn;
     TabSheet2: TTabSheet;
-    pnlAuthorInfo: TPanel;
+    pnlUserInfo: TPanel;
     lblID: TLabel;
     lblEmail: TLabel;
     btnSave: TButton;
     edtID: TEdit;
-    edtFullname: TEdit;
+    edtEmail: TEdit;
     TabSheet3: TTabSheet;
     pnlRawData: TPanel;
     memRawResponse: TMemo;
@@ -49,7 +49,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure GetUsers(SearchKey: string = ''; PageParam: Integer = 1);
     procedure btnSearchClick(Sender: TObject);
-    procedure dbnAuthorClick(Sender: TObject; Button: TNavigateBtn);
+    procedure dbnUserClick(Sender: TObject; Button: TNavigateBtn);
     procedure fdmemUserBeforeDelete(DataSet: TDataSet);
     procedure bbtnNextPageClick(Sender: TObject);
     procedure bbtnPrevPageClick(Sender: TObject);
@@ -88,7 +88,7 @@ function TUserForm.GetSearchKey: string;
 var
   SearchKey: string;
 begin
-  SearchKey := edtEmail.Text;
+  SearchKey := edtEmailKey.Text;
   Result := SearchKey;
 end;
 
@@ -128,7 +128,7 @@ var
   UserEmail: string;
   UserPassword: string;
 begin
-  UserEmail := edtFullname.Text;
+  UserEmail := edtEmail.Text;
   UserPassword := edtPassword.Text;
 
   if UserEmail.IsEmpty or UserPassword.IsEmpty then
@@ -146,7 +146,7 @@ begin
   if APIRequest.POST(RESTClient, APIEndpoint, JSONBody) then
   begin
     GetUsers;
-    pcUser.ActivePageIndex := 0;
+    pgcUser.ActivePageIndex := 0;
   end
 
 end;
@@ -162,23 +162,27 @@ begin
   GetUsers(GetSearchKey);
 end;
 
-procedure TUserForm.dbnAuthorClick(Sender: TObject; Button: TNavigateBtn);
+procedure TUserForm.dbnUserClick(Sender: TObject; Button: TNavigateBtn);
 begin
   if Button = nbRefresh then
   begin
     GetUsers;
-    edtEmail.Clear;
+    edtEmailKey.Clear;
   end;
 end;
 
 procedure TUserForm.fdmemUserBeforeDelete(DataSet: TDataSet);
 var
   Response: IMVCRESTResponse;
+  JSONValue: TJSONValue;
 begin
   Response := RESTClient.DataSetDelete('/api/users', fdmemUserid.AsString);
-  if not Response.StatusCode in [200] then
-    raise Exception.Create(Response.Content);
-  GetUSers;
+  if not (Response.StatusCode = 200) then
+  begin
+    JSONValue := TJSONObject.ParseJSONValue(Response.Content);
+    var ErrorMessage := JSONValue.GetValue<string>('message');
+    ShowMessage(ErrorMessage);
+  end
 end;
 
 procedure TUserForm.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -210,7 +214,7 @@ begin
     );
 
   try
-    RESTClient.SetBearerAuthorization(GlobalTokenManager.GetToken).Async(
+    RESTClient.SetBearerAuthorization(TokenManager.GetToken).Async(
       procedure (Resp: IMVCRESTResponse)
       begin
         fdmemUser.Close;

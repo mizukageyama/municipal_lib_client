@@ -4,13 +4,14 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, FireDAC.Stan.Intf,
-  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Mask, Vcl.DBCtrls, Vcl.ExtCtrls,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Vcl.Mask, Vcl.DBCtrls, Vcl.ExtCtrls, MainFrm,
   MVCFramework.RESTClient.Intf, MVCFramework.RESTClient, Vcl.Imaging.pngimage,
-  MVCFramework.DataSet.Utils, MVCFramework.Serializer.Commons, MainFrm, LibraryDM, System.JSON,
-  TokenManagerU;
+  MVCFramework.DataSet.Utils, MVCFramework.Serializer.Commons, LibraryDM,
+  System.JSON, TokenManagerU;
 
 type
   TLoginForm = class(TForm)
@@ -27,8 +28,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     RESTClient: IMVCRESTClient;
-    TokenManager: TTokenManager;
-    Loading: Boolean;
     { Private declarations }
   public
     { Public declarations }
@@ -58,22 +57,25 @@ begin
     Exit;
   end;
 
-  RESTClient.SetBasicAuthorization(Username, Password).Async(
-  procedure (Resp: IMVCRESTResponse)
-  begin
-    Loading := False;
-    if Resp.StatusCode = 200 then
+  try
+    RESTClient.SetBasicAuthorization(Username, Password).Async(
+    procedure (Resp: IMVCRESTResponse)
     begin
-      JSONValue := TJSONObject.ParseJSONValue(Resp.Content);
-      Token := JSONValue.GetValue<string>('token');
-      GlobalTokenManager.SaveToken(Token);
-     
-      MainForm.Show;
-      LoginForm.Hide;
-    end
-    else
-      ShowMessage('Username or password does not match');
-  end, nil, True).GET('/api/login');
+      if Resp.StatusCode = 200 then
+      begin
+        JSONValue := TJSONObject.ParseJSONValue(Resp.Content);
+        Token := JSONValue.GetValue<string>('token');
+        TokenManager.SaveToken(Token);
+        MainForm.Show;
+        LoginForm.Hide;
+      end
+      else
+        ShowMessage('Username or password does not match');
+    end, nil, True).GET('/api/login');
+  except
+    on E: Exception do
+      ShowMessage(e.ToString);
+  end;
 end;
 
 procedure TLoginForm.FormClose(Sender: TObject; var Action: TCloseAction);
