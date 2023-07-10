@@ -21,7 +21,5 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TMainForm, MainForm);
-  Application.CreateForm(TLoginForm, LoginForm);
-  Application.CreateForm(TNewPwdForm, NewPwdForm);
   Application.Run;
 end.

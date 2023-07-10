@@ -236,8 +236,8 @@ procedure TBookForm.fdmemBookBeforeDelete(DataSet: TDataSet);
 var
   Response: IMVCRESTResponse;
 begin
-  Response := RESTClient.DataSetDelete('/api/users', fdmemBookId.AsString);
-  if not Response.StatusCode in [200] then
+  Response := RESTClient.DataSetDelete('/api/books', fdmemBookId.AsString);
+  if not Response.StatusCode = 204 then
     raise Exception.Create(Response.Content);
   GetBooks;
 end;

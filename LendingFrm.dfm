@@ -42,6 +42,8 @@ object LendingForm: TLendingForm
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 954
+        ExplicitHeight = 529
         object dbgLendings: TDBGrid
           AlignWithMargins = True
           Left = 6
@@ -108,6 +110,7 @@ object LendingForm: TLendingForm
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
+          ExplicitWidth = 954
           object lblLendingStatus: TLabel
             Left = 9
             Top = 13
@@ -182,6 +185,8 @@ object LendingForm: TLendingForm
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 2
+          ExplicitTop = 487
+          ExplicitWidth = 954
           object lblPageInfo: TLabel
             Left = 120
             Top = 0
@@ -262,6 +267,7 @@ object LendingForm: TLendingForm
             Layout = blGlyphRight
             TabOrder = 0
             OnClick = bbtnNextPageClick
+            ExplicitLeft = 831
           end
           object bbtnPrevPage: TBitBtn
             AlignWithMargins = True
@@ -349,8 +355,6 @@ object LendingForm: TLendingForm
         ParentBackground = False
         ParentCtl3D = False
         TabOrder = 0
-        ExplicitWidth = 954
-        ExplicitHeight = 529
         object lblID: TLabel
           Left = 27
           Top = 33

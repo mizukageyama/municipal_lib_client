@@ -40,7 +40,7 @@ begin
 
     Resp := RESTClient.SetBearerAuthorization(TokenManager.GetToken)
       .POST(Endpoint);
-    Result := ResponseHandler(Resp, 'Added Successfully');
+    IsSuccess := ResponseHandler(Resp, 'Added Successfully');
   except
     on e: Exception do
       ShowMessage(e.toString);
@@ -62,7 +62,7 @@ begin
 
     Resp := RESTClient.SetBearerAuthorization(TokenManager.GetToken)
       .PUT(Endpoint);
-    Result := ResponseHandler(Resp, 'Updated Successfully');
+    IsSuccess := ResponseHandler(Resp, 'Updated Successfully');
   except
     on e: Exception do
       ShowMessage(e.toString);
@@ -80,7 +80,7 @@ begin
   try
     Resp := RESTClient.SetBearerAuthorization(TokenManager.GetToken)
       .DELETE(Endpoint);
-    Result := ResponseHandler(Resp, 'Deleted Successfully');
+    IsSuccess := ResponseHandler(Resp, 'Deleted Successfully');
   except
     on e: Exception do
       ShowMessage(e.toString);
@@ -92,17 +92,19 @@ class function APIRequest.ResponseHandler(Response: IMVCRESTResponse;
   SuccessMessage: String): boolean;
 var
   JSONValue: TJSONValue;
+  IsSucess: Boolean;
 begin
+  IsSucess := False;
   case Response.StatusCode of
     200, 201:
       begin
         ShowMessage(SuccessMessage);
-        Result := True;
+        IsSucess := True;
       end;
     204:
       begin
         ShowMessage(Response.StatusText);
-        Result := True;
+        IsSucess := True;
       end;
     400, 401:
       begin
@@ -115,6 +117,7 @@ begin
   else
     ShowMessage('Something went wrong');
   end;
+  Result := IsSucess;
 end;
 
 end.

@@ -34,7 +34,8 @@ end;
 
 procedure TTokenManager.SaveToken(const Token: string);
 begin
-  FStringStream.WriteString(Token);
+    FStringStream := TStringStream.Create('');
+    FStringStream.WriteString(Token);
 end;
 
 function TTokenManager.GetToken: string;

@@ -56,7 +56,6 @@ begin
     ShowMessage('Please fill all the fields');
     Exit;
   end;
-
   try
     RESTClient.SetBasicAuthorization(Username, Password).Async(
     procedure (Resp: IMVCRESTResponse)
@@ -79,7 +78,7 @@ end;
 
 procedure TLoginForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  //RESTClient := nil;
+  RESTClient := nil;
 end;
 
 procedure TLoginForm.FormCreate(Sender: TObject);

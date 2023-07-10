@@ -104,6 +104,7 @@ begin
   UserForm.Width := 440;
   edtID.Text := '*Auto Generated*';
   edtEmail.Clear;
+  edtPassword.Clear;
 end;
 
 procedure TUserForm.TabSheet3Show(Sender: TObject);
@@ -141,7 +142,6 @@ begin
   JSONBody.AddPair('email', UserEmail);
   JSONBody.AddPair('pwd', UserPassword);
 
-
   APIEndpoint := '/api/users';
   if APIRequest.POST(RESTClient, APIEndpoint, JSONBody) then
   begin
@@ -177,12 +177,9 @@ var
   JSONValue: TJSONValue;
 begin
   Response := RESTClient.DataSetDelete('/api/users', fdmemUserid.AsString);
-  if not (Response.StatusCode = 200) then
-  begin
-    JSONValue := TJSONObject.ParseJSONValue(Response.Content);
-    var ErrorMessage := JSONValue.GetValue<string>('message');
-    ShowMessage(ErrorMessage);
-  end
+  if not Response.StatusCode = 204 then
+    raise Exception.Create(Response.Content);
+  GetUsers;
 end;
 
 procedure TUserForm.FormClose(Sender: TObject; var Action: TCloseAction);

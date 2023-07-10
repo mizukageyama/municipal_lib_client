@@ -253,7 +253,7 @@ begin
         fdmemAuthorid.Value := RespJSON.GetValue<Integer>('id');
       end;
   end;
-  if not Resp.StatusCode in [200, 201] then
+  if not (Resp.StatusCode in [200, 201]) then
     raise Exception.Create(Resp.Content);
 end;
 
@@ -306,7 +306,7 @@ begin
         lblPageInfo.Caption := Format('Page %d out of %d',
           [Pagination.fCurrentPage, Pagination.fTotalPages]);
 
-        Loading := True;
+        Loading := False;
         RESTClient.ClearQueryParams;
       end, nil, True).Get('/api/authors');
   except

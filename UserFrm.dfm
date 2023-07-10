@@ -412,7 +412,7 @@ object UserForm: TUserForm
       object pnlRawData: TPanel
         Left = 0
         Top = 0
-        Width = 651
+        Width = 657
         Height = 538
         Margins.Left = 4
         Margins.Top = 4
@@ -420,10 +420,11 @@ object UserForm: TUserForm
         Margins.Bottom = 4
         Align = alClient
         TabOrder = 0
+        ExplicitWidth = 651
         object memRawResponse: TMemo
           Left = 1
           Top = 1
-          Width = 649
+          Width = 655
           Height = 536
           Margins.Left = 4
           Margins.Top = 4

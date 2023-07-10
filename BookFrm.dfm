@@ -42,6 +42,8 @@ object BookForm: TBookForm
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 931
+        ExplicitHeight = 529
         object dbgBooks: TDBGrid
           AlignWithMargins = True
           Left = 6
@@ -101,6 +103,7 @@ object BookForm: TBookForm
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
+          ExplicitWidth = 931
           object lblBookTitle: TLabel
             Left = 9
             Top = 13
@@ -167,6 +170,8 @@ object BookForm: TBookForm
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 2
+          ExplicitTop = 487
+          ExplicitWidth = 931
           object lblPageInfo: TLabel
             Left = 120
             Top = 0
@@ -247,6 +252,7 @@ object BookForm: TBookForm
             Layout = blGlyphRight
             TabOrder = 0
             OnClick = bbtnNextPageClick
+            ExplicitLeft = 808
           end
           object bbtnPrevPage: TBitBtn
             AlignWithMargins = True
@@ -334,8 +340,6 @@ object BookForm: TBookForm
         ParentBackground = False
         ParentCtl3D = False
         TabOrder = 0
-        ExplicitWidth = 429
-        ExplicitHeight = 529
         object lblID: TLabel
           Left = 134
           Top = 39
@@ -440,8 +444,6 @@ object BookForm: TBookForm
         Margins.Bottom = 4
         Align = alRight
         TabOrder = 1
-        ExplicitLeft = 429
-        ExplicitHeight = 529
         object dbgLendingHistory: TDBGrid
           Left = 1
           Top = 34
@@ -505,8 +507,6 @@ object BookForm: TBookForm
           ParentBackground = False
           ParentFont = False
           TabOrder = 1
-          ExplicitLeft = 2
-          ExplicitTop = 9
         end
       end
     end

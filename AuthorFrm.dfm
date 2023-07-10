@@ -479,7 +479,6 @@ object AuthorForm: TAuthorForm
           ParentBackground = False
           ParentFont = False
           TabOrder = 1
-          ExplicitTop = 8
         end
       end
     end
