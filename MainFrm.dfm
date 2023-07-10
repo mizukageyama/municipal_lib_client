@@ -13,8 +13,9 @@ object MainForm: TMainForm
   Menu = mmLibrarySystem
   Position = poScreenCenter
   OnClose = FormClose
+  OnShow = FormShow
   TextHeight = 15
-  object Label1: TLabel
+  object lblWelcome: TLabel
     Left = 72
     Top = 74
     Width = 360

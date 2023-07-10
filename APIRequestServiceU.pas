@@ -111,7 +111,7 @@ begin
         ShowMessage(ErrorMessage);
       end;
     403:
-      ShowMessage('You are now allowed for this action.')
+      ShowMessage('You are not allowed for this action.')
   else
     ShowMessage('Something went wrong');
   end;

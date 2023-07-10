@@ -538,7 +538,7 @@ object CustomerForm: TCustomerForm
       object pnlRawData: TPanel
         Left = 0
         Top = 0
-        Width = 910
+        Width = 916
         Height = 538
         Margins.Left = 4
         Margins.Top = 4
@@ -546,10 +546,11 @@ object CustomerForm: TCustomerForm
         Margins.Bottom = 4
         Align = alClient
         TabOrder = 0
+        ExplicitWidth = 910
         object memRawResponse: TMemo
           Left = 1
           Top = 1
-          Width = 908
+          Width = 914
           Height = 536
           Margins.Left = 4
           Margins.Top = 4

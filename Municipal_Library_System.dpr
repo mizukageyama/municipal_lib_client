@@ -20,12 +20,8 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TLoginForm, LoginForm);
-  Application.CreateForm(TLoadingForm, LoadingForm);
   Application.CreateForm(TMainForm, MainForm);
-  Application.CreateForm(TAuthorForm, AuthorForm);
-  Application.CreateForm(TBookForm, BookForm);
-  Application.CreateForm(TUserForm, UserForm);
+  Application.CreateForm(TLoginForm, LoginForm);
   Application.CreateForm(TNewPwdForm, NewPwdForm);
   Application.Run;
 end.

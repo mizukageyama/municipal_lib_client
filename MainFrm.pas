@@ -31,7 +31,7 @@ type
     Change1: TMenuItem;
     Logout2: TMenuItem;
     N1: TMenuItem;
-    Label1: TLabel;
+    lblWelcome: TLabel;
     procedure actCancelLendingExecute(Sender: TObject);
     procedure actAuthorTableExecute(Sender: TObject);
     procedure actBookTableExecute(Sender: TObject);
@@ -42,6 +42,7 @@ type
     procedure actLogoutExecute(Sender: TObject);
     procedure actChangePasswordExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -91,12 +92,11 @@ end;
 procedure TMainForm.actExitExecute(Sender: TObject);
 begin
   Close;
-  LoginForm.Close;
 end;
 
 procedure TMainForm.actLogoutExecute(Sender: TObject);
 begin
-  Close; { Close main form, then show login form }
+  //MainForm.Hide;
   LoginForm.Show;
 end;
 
@@ -115,6 +115,10 @@ end;
 procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   LoginForm.Close; { End Application }
+end;
+procedure TMainForm.FormShow(Sender: TObject);
+begin
+  LoginForm.ShowModal;
 end;
 
 end.

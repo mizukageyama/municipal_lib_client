@@ -66,8 +66,7 @@ begin
         JSONValue := TJSONObject.ParseJSONValue(Resp.Content);
         Token := JSONValue.GetValue<string>('token');
         TokenManager.SaveToken(Token);
-        MainForm.Show;
-        LoginForm.Hide;
+        LoginForm.Close;
       end
       else
         ShowMessage('Username or password does not match');
@@ -80,7 +79,7 @@ end;
 
 procedure TLoginForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  RESTClient := nil;
+  //RESTClient := nil;
 end;
 
 procedure TLoginForm.FormCreate(Sender: TObject);
